@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Profil Düzenle - Kargo Takip Sistemi
+{% endblock %}
+
+{% block content %}
+
+<div class="profil-page">
+
+    <div class="profil-card">
+
+        <div class="profil-header">
+
+            <div class="profil-icon">
+
+                {% if kullanici.profil_fotografi %}
+
+                <img src="{{ url_for('static', filename='profil_fotograflari/' ~ kullanici.profil_fotografi) }}"
+                    alt="Profil Fotoğrafı">
+
+                {% else %}
+
+                <iconify-icon icon="reicon:user-id-filled"></iconify-icon>
+
+                {% endif %}
+
+            </div>
+
+            <h1>Profil Bilgilerini Düzenle</h1>
+
+            <p>Kişisel bilgilerinizi güncelleyebilirsiniz.</p>
+
+        </div>
+
+
+        <form method="POST">
+
+            <div class="form-group">
+
+                <label for="ad">Ad</label>
+
+                <input type="text" id="ad" name="ad" value="{{ kullanici.ad }}" required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="soyad">Soyad</label>
+
+                <input type="text" id="soyad" name="soyad" value="{{ kullanici.soyad }}" required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="telefon">Telefon</label>
+
+                <input type="text" id="telefon" name="telefon" value="{{ kullanici.telefon or '' }}"
+                    placeholder="Telefon numaranız">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="adres">Adres</label>
+
+                <textarea id="adres" name="adres" rows="4"
+                    placeholder="Adresiniz">{{ kullanici.adres or '' }}</textarea>
+
+            </div>
+
+
+            <div class="profil-actions">
+
+                <button type="submit" class="profil-button">
+
+                    <iconify-icon icon="mdi:content-save"></iconify-icon>
+
+                    Değişiklikleri Kaydet
+
+                </button>
+
+
+                <a href="{{ url_for('main.profilim') }}" class="profil-button">
+
+                    <iconify-icon icon="mdi:arrow-left"></iconify-icon>
+
+                    Geri Dön
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

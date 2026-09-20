@@ -1,0 +1,536 @@
+{% extends "layout.html" %}
+
+{% block title %}
+
+Kargolar
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 pt-4">
+
+    <!-- =========================
+         SAYFA BAŞLIĞI
+         ========================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+
+                <i class="fa-solid fa-boxes-stacked me-2"></i>
+
+                Kargolar
+
+            </h2>
+
+            <p class="text-muted mb-0">
+
+                {{ sube.sube_ad }} şubesine ait kargoları görüntüleyin.
+
+            </p>
+
+        </div>
+
+
+        <a href="{{ url_for('main.subepersoneli_kargo_olustur') }}" class="btn btn-primary">
+
+            <i class="fa-solid fa-plus me-2"></i>
+
+            Yeni Kargo Oluştur
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         ARAMA / FİLTRELEME
+         ========================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+
+                <i class="fa-solid fa-filter me-2"></i>
+
+                Kargo Ara ve Filtrele
+
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <form method="GET" action="{{ url_for('main.subepersoneli_kargolar') }}">
+
+                <!-- =========================
+                     1. SATIR
+                     TAKİP NO + GÖNDERİCİ
+                     ========================= -->
+
+                <div class="row g-3">
+
+                    <!-- Takip No -->
+
+                    <div class="col-md-6">
+
+                        <label for="takip_no" class="form-label fw-semibold">
+
+                            Takip Numarası
+
+                        </label>
+
+                        <input type="text" class="form-control" id="takip_no" name="takip_no"
+                            value="{{ takip_no or '' }}" placeholder="Örn. KRG123456">
+
+                    </div>
+
+
+                    <!-- Gönderici -->
+
+                    <div class="col-md-6">
+
+                        <label for="gonderici" class="form-label fw-semibold">
+
+                            Gönderici
+
+                        </label>
+
+                        <input type="text" class="form-control" id="gonderici" name="gonderici"
+                            value="{{ gonderici or '' }}" placeholder="Gönderici adı">
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     2. SATIR
+                     ALICI + DURUM + KURYE
+                     ========================= -->
+
+                <div class="row g-3 mt-4">
+
+                    <!-- Alıcı -->
+
+                    <div class="col-md-4">
+
+                        <label for="alici" class="form-label fw-semibold">
+
+                            Alıcı
+
+                        </label>
+
+                        <input type="text" class="form-control" id="alici" name="alici" value="{{ alici or '' }}"
+                            placeholder="Alıcı adı">
+
+                    </div>
+
+
+                    <!-- Kargo Durumu -->
+
+                    <div class="col-md-4">
+
+                        <label for="durum" class="form-label fw-semibold">
+
+                            Kargo Durumu
+
+                        </label>
+
+                        <select class="form-select" id="durum" name="durum">
+
+                            <option value="">
+                                Tüm Durumlar
+                            </option>
+
+                            <option value="Hazırlanıyor" {% if durum=="Hazırlanıyor" %}selected{% endif %}>
+
+                                Hazırlanıyor
+
+                            </option>
+
+                            <option value="Şubede" {% if durum=="Şubede" %}selected{% endif %}>
+
+                                Şubede
+
+                            </option>
+
+                            <option value="Dağıtımda" {% if durum=="Dağıtımda" %}selected{% endif %}>
+
+                                Dağıtımda
+
+                            </option>
+
+                            <option value="Teslim Edildi" {% if durum=="Teslim Edildi" %}selected{% endif %}>
+
+                                Teslim Edildi
+
+                            </option>
+
+                            <option value="İptal Edildi" {% if durum=="İptal Edildi" %}selected{% endif %}>
+
+                                İptal Edildi
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Kurye -->
+
+                    <div class="col-md-4">
+
+                        <label for="kurye_id" class="form-label fw-semibold">
+
+                            Kurye
+
+                        </label>
+
+                        <select class="form-select" id="kurye_id" name="kurye_id">
+
+                            <option value="">
+                                Tüm Kuryeler
+                            </option>
+
+                            {% for kurye in kuryeler %}
+
+                            <option value="{{ kurye.id }}" {% if kurye_id==kurye.id|string %}selected{% endif %}>
+
+                                {{ kurye.kullanici.ad }}
+                                {{ kurye.kullanici.soyad }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     3. SATIR
+                     TARİH
+                     ========================= -->
+
+                <div class="row g-3 mt-3">
+
+                    <!-- Tarih -->
+
+                    <div class="col-md-4">
+
+                        <label for="tarih" class="form-label fw-semibold">
+
+                            Gönderim Tarihi
+
+                        </label>
+
+                        <input type="date" class="form-control" id="tarih" name="tarih" value="{{ tarih or '' }}">
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     BUTONLAR
+                     ========================= -->
+
+                <div class="d-flex gap-2 mt-4">
+
+                    <button type="submit" class="btn btn-primary">
+
+                        <i class="fa-solid fa-magnifying-glass me-2"></i>
+
+                        Filtrele
+
+                    </button>
+
+
+                    <a href="{{ url_for('main.subepersoneli_kargolar') }}" class="btn btn-outline-secondary">
+
+                        <i class="fa-solid fa-rotate-left me-2"></i>
+
+                        Temizle
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         SONUÇ BİLGİSİ
+         ========================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h5 class="mb-0">
+
+            <i class="fa-solid fa-list me-2"></i>
+
+            Kargo Listesi
+
+        </h5>
+
+
+        <span class="badge bg-secondary">
+
+            {{ kargolar|length }} kargo
+
+        </span>
+
+    </div>
+
+
+    <!-- =========================
+         KARGO LİSTESİ
+         ========================= -->
+
+    {% if kargolar %}
+
+    <div class="card shadow-sm">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>
+                            Takip No
+                        </th>
+
+                        <th>
+                            Gönderici
+                        </th>
+
+                        <th>
+                            Alıcı
+                        </th>
+
+                        <th>
+                            Durum
+                        </th>
+
+                        <th>
+                            Kurye
+                        </th>
+
+                        <th>
+                            Gönderim Tarihi
+                        </th>
+
+                        <th class="text-center">
+                            İşlem
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for kargo in kargolar %}
+
+                    <tr>
+
+                        <!-- Takip No -->
+
+                        <td>
+
+                            <strong>
+                                {{ kargo.takip_no }}
+                            </strong>
+
+                        </td>
+
+
+                        <!-- Gönderici -->
+
+                        <td>
+
+                            {{ kargo.gonderici }}
+
+                            <br>
+
+                            <small class="text-muted">
+
+                                {{ kargo.gonderici_telefon }}
+
+                            </small>
+
+                        </td>
+
+
+                        <!-- Alıcı -->
+
+                        <td>
+
+                            {{ kargo.alici }}
+
+                            <br>
+
+                            <small class="text-muted">
+
+                                {{ kargo.alici_telefon }}
+
+                            </small>
+
+                        </td>
+
+
+                        <!-- Durum -->
+
+                        <td>
+
+                            {% if kargo.durum == "Teslim Edildi" %}
+
+                            <span class="badge bg-success">
+
+                                Teslim Edildi
+
+                            </span>
+
+                            {% elif kargo.durum == "Dağıtımda" %}
+
+                            <span class="badge bg-warning text-dark">
+
+                                Dağıtımda
+
+                            </span>
+
+                            {% elif kargo.durum == "İptal Edildi" %}
+
+                            <span class="badge bg-danger">
+
+                                İptal Edildi
+
+                            </span>
+
+                            {% elif kargo.durum == "Şubede" %}
+
+                            <span class="badge bg-info text-dark">
+
+                                Şubede
+
+                            </span>
+
+                            {% else %}
+
+                            <span class="badge bg-secondary">
+
+                                {{ kargo.durum }}
+
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- Kurye -->
+
+                        <td>
+
+                            {% if kargo.kurye %}
+
+                            {{ kargo.kurye.kullanici.ad }}
+                            {{ kargo.kurye.kullanici.soyad }}
+
+                            {% else %}
+
+                            <span class="text-muted">
+
+                                Atanmadı
+
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- Tarih -->
+
+                        <td>
+
+                            {{ kargo.gonderim_tarihi.strftime('%d.%m.%Y %H:%M') }}
+
+                        </td>
+
+
+                        <!-- İşlem -->
+
+                        <td class="text-center">
+
+                            <a href="{{ url_for(
+                                        'main.subepersoneli_kargo_detay',
+                                        kargo_id=kargo.id
+                                    ) }}" class="btn btn-sm btn-outline-primary">
+
+                                <i class="fa-solid fa-eye me-1"></i>
+
+                                Detay
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="card shadow-sm">
+
+        <div class="card-body text-center py-5">
+
+            <i class="fa-solid fa-box-open fa-3x text-muted mb-3"></i>
+
+            <h5>
+                Kargo bulunamadı.
+            </h5>
+
+            <p class="text-muted mb-0">
+
+                Seçtiğiniz filtrelere uygun kargo bulunmamaktadır.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+/* =========================
+   NAVBAR
+   ========================= */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #1f2937;
+}
+
+.navbar-logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar-links a:hover {
+    text-decoration: underline;
+}
+
+.navbar-links span {
+    color: white;
+}
+
+.bildirim-zil {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.bildirim-badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+
+    min-width: 16px;
+    height: 16px;
+
+    padding: 0 4px;
+
+    border-radius: 50%;
+
+    background-color: white;
+    color: #007bff;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    line-height: 1;
+}

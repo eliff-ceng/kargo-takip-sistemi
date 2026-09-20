@@ -1,0 +1,859 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Yönetici Paneli
+{% endblock %}
+
+{% block content %}
+
+<div class="yonetici-dashboard">
+
+    <!-- ========================================= -->
+    <!-- BAŞLIK -->
+    <!-- ========================================= -->
+
+    <div class="yonetici-header">
+
+        <div>
+
+            <h1>
+                Yönetici Paneli
+            </h1>
+
+            <p>
+                Hoş geldin,
+                <strong>
+                    {{ yonetici.ad }} {{ yonetici.soyad }}
+                </strong>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- İSTATİSTİK KARTLARI -->
+    <!-- ========================================= -->
+
+    <div class="yonetici-istatistikler">
+
+        <!-- KULLANICILAR -->
+
+        <div class="yonetici-stat-card">
+
+            <div class="yonetici-stat-icon">
+
+                <iconify-icon icon="mdi:account-group"></iconify-icon>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Toplam Kullanıcı
+                </span>
+
+                <strong>
+                    {{ toplam_kullanici }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ŞUBELER -->
+
+        <div class="yonetici-stat-card">
+
+            <div class="yonetici-stat-icon">
+
+                <iconify-icon icon="mdi:office-building"></iconify-icon>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Toplam Şube
+                </span>
+
+                <strong>
+                    {{ toplam_sube }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- KURYELER -->
+
+        <div class="yonetici-stat-card">
+
+            <div class="yonetici-stat-icon">
+
+                <iconify-icon icon="fa6-solid:truck"></iconify-icon>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Toplam Kurye
+                </span>
+
+                <strong>
+                    {{ toplam_kurye }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- KARGOLAR -->
+
+        <div class="yonetici-stat-card">
+
+            <div class="yonetici-stat-icon">
+
+                <iconify-icon icon="mdi:package-variant-closed"></iconify-icon>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Toplam Kargo
+                </span>
+
+                <strong>
+                    {{ toplam_kargo }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- YÖNETİM MENÜLERİ -->
+    <!-- ========================================= -->
+
+    <div class="yonetici-menu">
+
+        <!-- KULLANICILAR -->
+
+        <div class="yonetici-menu-card">
+
+            <iconify-icon icon="mdi:account-group"></iconify-icon>
+
+            <h3>
+                Kullanıcılar
+            </h3>
+
+            <p>
+                Sistemde kayıtlı tüm kullanıcıları
+                görüntüle.
+            </p>
+
+            <a href="{{ url_for('main.yonetici_kullanicilar') }}" class="yonetici-menu-button">
+                Kullanıcıları Gör
+            </a>
+
+        </div>
+
+
+        <!-- ŞUBELER -->
+
+        <div class="yonetici-menu-card">
+
+            <iconify-icon icon="mdi:office-building"></iconify-icon>
+
+            <h3>
+                Şubeler
+            </h3>
+
+            <p>
+                Sistemde bulunan tüm şubeleri
+                görüntüle.
+            </p>
+
+            <a href="{{ url_for('main.yonetici_subeler') }}" class="yonetici-menu-button">
+                Şubeleri Gör
+            </a>
+
+        </div>
+
+
+        <!-- KURYELER -->
+
+        <div class="yonetici-menu-card">
+
+            <iconify-icon icon="fa6-solid:truck"></iconify-icon>
+
+            <h3>
+                Kuryeler
+            </h3>
+
+            <p>
+                Sistemde kayıtlı kuryeleri ve
+                görevlerini görüntüle.
+            </p>
+
+            <a href="{{ url_for('main.yonetici_kuryeler') }}" class="yonetici-menu-button">
+                Kuryeleri Gör
+            </a>
+
+        </div>
+
+
+        <!-- KARGOLAR -->
+
+        <div class="yonetici-menu-card">
+
+            <iconify-icon icon="griddy-icons:package-filled"></iconify-icon>
+
+            <h3>
+                Kargolar
+            </h3>
+
+            <p>
+                Sistemdeki tüm kargoları
+                görüntüle.
+            </p>
+
+            <a href="{{ url_for('main.yonetici_kargolar') }}" class="yonetici-menu-button">
+                Kargoları Gör
+            </a>
+
+        </div>
+
+
+        <!-- MÜŞTERİ DEĞERLENDİRMELERİ -->
+
+        <div class="yonetici-menu-card">
+
+            <iconify-icon icon="mdi:star-outline"></iconify-icon>
+
+            <h3>
+                Değerlendirmeler
+            </h3>
+
+            <p>
+                Müşteri puanlarını ve yorumlarını
+                görüntüle.
+            </p>
+
+            <a href="{{ url_for('main.yonetici_degerlendirmeler') }}" class="yonetici-menu-button">
+                Değerlendirmeleri Gör
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- GRAFİKLER -->
+    <!-- ========================================= -->
+
+    <div class="yonetici-grafikler">
+
+
+        <!-- ===================================== -->
+        <!-- KARGO DURUMLARI -->
+        <!-- ===================================== -->
+
+        <div class="yonetici-grafik-card">
+
+            <div class="yonetici-section-header">
+
+                <h2>
+                    Kargo Durumları
+                </h2>
+
+            </div>
+
+            <div class="yonetici-grafik">
+
+                <canvas id="kargoDurumlariGrafigi"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <!-- ===================================== -->
+        <!-- AYLIK KARGO SAYISI -->
+        <!-- ===================================== -->
+
+        <div class="yonetici-grafik-card">
+
+            <div class="yonetici-section-header">
+
+                <h2>
+                    Aylık Kargo Sayısı
+                </h2>
+
+            </div>
+
+            <div class="yonetici-grafik">
+
+                <canvas id="aylikKargoGrafigi"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <!-- ===================================== -->
+        <!-- ŞUBELERE GÖRE KARGO -->
+        <!-- ===================================== -->
+
+        <div class="yonetici-grafik-card">
+
+            <div class="yonetici-section-header">
+
+                <h2>
+                    Şubelere Göre Kargo
+                </h2>
+
+            </div>
+
+            <div class="yonetici-grafik">
+
+                <canvas id="subeKargoGrafigi"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <!-- ===================================== -->
+        <!-- KURYELERE GÖRE KARGO -->
+        <!-- ===================================== -->
+
+        <div class="yonetici-grafik-card">
+
+            <div class="yonetici-section-header">
+
+                <h2>
+                    Kuryelere Göre Kargo
+                </h2>
+
+            </div>
+
+            <div class="yonetici-grafik">
+
+                <canvas id="kuryeKargoGrafigi"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- KURYE PERFORMANSI -->
+    <!-- ========================================= -->
+
+    <div class="yonetici-section kurye-performans-section">
+
+        <div class="yonetici-section-header">
+
+            <h2>
+
+                <iconify-icon icon="mdi:trophy" style="margin-right: 8px;"></iconify-icon>
+
+                Kurye Performansı
+
+            </h2>
+
+
+            <a href="{{ url_for('main.yonetici_kurye_performans') }}" class="yonetici-menu-button">
+                Detaylı Performans
+            </a>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Kurye
+                        </th>
+
+                        <th>
+                            Toplam Kargo
+                        </th>
+
+                        <th>
+                            Teslim Edilen
+                        </th>
+
+                        <th>
+                            Dağıtımda
+                        </th>
+
+                        <th>
+                            Bekleyen
+                        </th>
+
+                        <th>
+                            Teslimat Oranı
+                        </th>
+
+                        <th>
+                            Ort. Teslim Süresi
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for veri in performanslar %}
+
+                    <tr>
+
+                        <td>
+
+                            <strong>
+
+                                {{ veri.kurye.kullanici.ad }}
+
+                                {{ veri.kurye.kullanici.soyad }}
+
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="badge bg-primary">
+                                {{ veri.toplam_kargo }}
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="badge bg-success">
+                                {{ veri.teslim_edilen }}
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="badge bg-warning text-dark">
+                                {{ veri.dagitimda }}
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="badge bg-secondary">
+                                {{ veri.bekleyen }}
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            {% if veri.teslimat_orani >= 80 %}
+
+                            <span class="badge bg-success">
+
+                                %{{ veri.teslimat_orani }}
+
+                            </span>
+
+                            {% elif veri.teslimat_orani >= 50 %}
+
+                            <span class="badge bg-warning text-dark">
+
+                                %{{ veri.teslimat_orani }}
+
+                            </span>
+
+                            {% else %}
+
+                            <span class="badge bg-danger">
+
+                                %{{ veri.teslimat_orani }}
+
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            {% if veri.ortalama_saat > 0 %}
+
+                            {{ veri.ortalama_saat }} saat
+
+                            {% else %}
+
+                            Veri yok
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="7" class="text-center text-muted">
+                            Kayıtlı kurye performans verisi
+                            bulunmamaktadır.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- CHART.JS -->
+<!-- ========================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<!-- ========================================= -->
+<!-- FLASK GRAFİK VERİLERİ -->
+<!-- ========================================= -->
+
+<script type="application/json" id="yoneticiGrafikVerileri">
+{
+    "kargoDurumlari": {{ kargo_durumlari | tojson }},
+    "kargoDurumSayilari": {{ kargo_durum_sayilari | tojson }},
+
+    "aylar": {{ aylar | tojson }},
+    "aylikSayilar": {{ aylik_sayilar | tojson }},
+
+    "subeAdlari": {{ sube_adlari | tojson }},
+    "subeKargoSayilari": {{ sube_kargo_sayilari | tojson }},
+
+    "kuryeAdlari": {{ kurye_adlari | tojson }},
+    "kuryeKargoSayilari": {{ kurye_kargo_sayilari | tojson }}
+}
+</script>
+
+
+<!-- ========================================= -->
+<!-- GRAFİKLER -->
+<!-- ========================================= -->
+
+<script>
+
+    const grafikVerileri = JSON.parse(
+        document.getElementById(
+            "yoneticiGrafikVerileri"
+        ).textContent
+    );
+
+
+    // =========================================
+    // VERİLER
+    // =========================================
+
+    const kargoDurumlari =
+        grafikVerileri.kargoDurumlari;
+
+    const kargoDurumSayilari =
+        grafikVerileri.kargoDurumSayilari;
+
+    const aylar =
+        grafikVerileri.aylar;
+
+    const aylikSayilar =
+        grafikVerileri.aylikSayilar;
+
+    const subeAdlari =
+        grafikVerileri.subeAdlari;
+
+    const subeKargoSayilari =
+        grafikVerileri.subeKargoSayilari;
+
+    const kuryeAdlari =
+        grafikVerileri.kuryeAdlari;
+
+    const kuryeKargoSayilari =
+        grafikVerileri.kuryeKargoSayilari;
+
+
+    // =========================================
+    // KARGO DURUMLARI GRAFİĞİ
+    // =========================================
+
+    new Chart(
+        document.getElementById(
+            "kargoDurumlariGrafigi"
+        ),
+        {
+
+            type: "doughnut",
+
+            data: {
+
+                labels: kargoDurumlari,
+
+                datasets: [{
+
+                    data: kargoDurumSayilari
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom"
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+
+    // =========================================
+    // AYLIK KARGO GRAFİĞİ
+    // =========================================
+
+    new Chart(
+        document.getElementById(
+            "aylikKargoGrafigi"
+        ),
+        {
+
+            type: "line",
+
+            data: {
+
+                labels: aylar,
+
+                datasets: [{
+
+                    label: "Kargo Sayısı",
+
+                    data: aylikSayilar,
+
+                    tension: 0.3,
+
+                    fill: false
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+
+                            precision: 0
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+
+    // =========================================
+    // ŞUBELERE GÖRE KARGO
+    // =========================================
+
+    new Chart(
+        document.getElementById(
+            "subeKargoGrafigi"
+        ),
+        {
+
+            type: "bar",
+
+            data: {
+
+                labels: subeAdlari,
+
+                datasets: [{
+
+                    label: "Kargo Sayısı",
+
+                    data: subeKargoSayilari
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+
+                            precision: 0
+
+                        }
+
+                    }
+
+                },
+
+                plugins: {
+
+                    legend: {
+
+                        display: false
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+
+    // =========================================
+    // KURYELERE GÖRE KARGO
+    // =========================================
+
+    new Chart(
+        document.getElementById(
+            "kuryeKargoGrafigi"
+        ),
+        {
+
+            type: "bar",
+
+            data: {
+
+                labels: kuryeAdlari,
+
+                datasets: [{
+
+                    label: "Kargo Sayısı",
+
+                    data: kuryeKargoSayilari
+
+                }]
+
+            },
+
+            options: {
+
+                indexAxis: "y",
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    x: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+
+                            precision: 0
+
+                        }
+
+                    }
+
+                },
+
+                plugins: {
+
+                    legend: {
+
+                        display: false
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+</script>
+
+{% endblock %}

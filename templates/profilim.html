@@ -1,0 +1,123 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Profilim - Kargo Takip Sistemi
+{% endblock %}
+
+{% block content %}
+
+<div class="profil-page">
+
+    <div class="profil-card">
+
+        <div class="profil-header">
+
+            <div class="profil-icon">
+
+                {% if kullanici.profil_fotografi %}
+
+                <img src="{{ url_for('static', filename='profil_fotograflari/' ~ kullanici.profil_fotografi) }}"
+                    alt="Profil Fotoğrafı">
+
+                {% else %}
+
+                <iconify-icon icon="reicon:user-id-filled"></iconify-icon>
+
+                {% endif %}
+
+            </div>
+
+            <h1>Profilim</h1>
+
+            <p>Kişisel bilgilerin</p>
+
+        </div>
+
+
+        <div class="profil-bilgileri">
+
+            <div class="profil-bilgi">
+
+                <span>Ad</span>
+
+                <strong>
+                    {{ kullanici.ad }}
+                </strong>
+
+            </div>
+
+
+            <div class="profil-bilgi">
+
+                <span>Soyad</span>
+
+                <strong>
+                    {{ kullanici.soyad }}
+                </strong>
+
+            </div>
+
+
+            <div class="profil-bilgi">
+
+                <span>Kullanıcı Adı</span>
+
+                <strong>
+                    {{ kullanici.kullanici_adi }}
+                </strong>
+
+            </div>
+
+
+            <div class="profil-bilgi">
+
+                <span>E-posta</span>
+
+                <strong>
+                    {{ kullanici.email }}
+                </strong>
+
+            </div>
+
+
+            <div class="profil-bilgi">
+
+                <span>Telefon</span>
+
+                <strong>
+                    {{ kullanici.telefon if kullanici.telefon else "Belirtilmemiş" }}
+                </strong>
+
+            </div>
+
+
+            <div class="profil-bilgi">
+
+                <span>Adres</span>
+
+                <strong>
+                    {{ kullanici.adres if kullanici.adres else "Belirtilmemiş" }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="profil-actions">
+
+            <a href="{{ url_for('main.profil_duzenle') }}" class="profil-button">
+
+                <iconify-icon icon="mdi:pencil"></iconify-icon>
+
+                Bilgilerimi Düzenle
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

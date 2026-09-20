@@ -1,0 +1,207 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kargo Düzenle
+{% endblock %}
+
+{% block content %}
+
+<div class="yonetici-dashboard">
+
+    <div class="yonetici-header">
+
+        <h1>Kargo Düzenle</h1>
+
+        <p>
+            Kargo bilgilerini güncelleyebilirsiniz.
+        </p>
+
+    </div>
+
+
+    <div class="yonetici-section">
+
+        <form method="POST">
+
+            <div class="yonetici-filter-group">
+
+                <label>Takip Numarası</label>
+
+                <input type="text" name="takip_no" value="{{ kargo.takip_no }}" required>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label>Gönderici</label>
+
+                <input type="text" name="gonderici" value="{{ kargo.gonderici }}" required>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label>Gönderici Telefon</label>
+
+                <input type="text" name="gonderici_telefon" value="{{ kargo.gonderici_telefon }}" required>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label>Gönderici Adres</label>
+
+                <textarea name="gonderici_adres" required>{{ kargo.gonderici_adres }}</textarea>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label>Alıcı</label>
+
+                <input type="text" name="alici" value="{{ kargo.alici }}" required>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label>Alıcı Telefon</label>
+
+                <input type="text" name="alici_telefon" value="{{ kargo.alici_telefon }}" required>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label>Alıcı Adres</label>
+
+                <textarea name="alici_adres" required>{{ kargo.alici_adres }}</textarea>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label>Durum</label>
+
+                <select name="durum" required>
+
+                    {% for durum in durumlar %}
+
+                    <option value="{{ durum }}" {% if kargo.durum==durum %}selected{% endif %}>
+                        {{ durum }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label>Ağırlık (kg)</label>
+
+                <input type="number" step="0.01" name="agirlik" value="{{ kargo.agirlik }}" required>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label>Ücret (₺)</label>
+
+                <input type="number" step="0.01" name="ucret" value="{{ kargo.ucret }}" required>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label>Gönderim Tarihi</label>
+
+                <input type="datetime-local" name="gonderim_tarihi"
+                    value="{{ kargo.gonderim_tarihi.strftime('%Y-%m-%dT%H:%M') }}" required>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label>Teslim Tarihi</label>
+
+                <input type="datetime-local" name="teslim_tarihi" {% if kargo.teslim_tarihi %}
+                    value="{{ kargo.teslim_tarihi.strftime('%Y-%m-%dT%H:%M') }}" {% endif %}>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label>Şube</label>
+
+                <select name="sube_id" required>
+
+                    {% for sube in subeler %}
+
+                    <option value="{{ sube.id }}" {% if kargo.sube_id==sube.id %}selected{% endif %}>
+                        {{ sube.sube_ad }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label>Kurye</label>
+
+                <select name="kurye_id">
+
+                    <option value="">
+                        Kurye atanmadı
+                    </option>
+
+                    {% for kurye in kuryeler %}
+
+                    <option value="{{ kurye.id }}" {% if kargo.kurye_id==kurye.id %}selected{% endif %}>
+                        {{ kurye.kullanici.ad }}
+                        {{ kurye.kullanici.soyad }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div style="margin-top: 20px;">
+
+                <button type="submit" class="yonetici-menu-button">
+                    Değişiklikleri Kaydet
+                </button>
+
+                <a href="{{ url_for('main.yonetici_kargolar') }}" class="yonetici-menu-button">
+                    İptal
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

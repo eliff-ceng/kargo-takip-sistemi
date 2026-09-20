@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kurye Düzenle
+{% endblock %}
+
+{% block content %}
+
+<div class="yonetici-dashboard">
+
+    <!-- BAŞLIK -->
+    <div class="yonetici-header">
+        <div>
+            <h1>Kurye Düzenle</h1>
+            <p>Kurye bilgilerini güncelleyebilirsiniz.</p>
+        </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="yonetici-section">
+
+        <div class="yonetici-section-header">
+            <h2>Kurye Bilgileri</h2>
+        </div>
+
+        <form method="POST" action="{{ url_for('main.yonetici_kurye_duzenle', kurye_id=kurye.id) }}">
+
+            <div class="yonetici-filter-group">
+                <label>Ad</label>
+                <input type="text" name="ad" value="{{ kullanici.ad }}" required>
+            </div>
+
+            <div class="yonetici-filter-group">
+                <label>Soyad</label>
+                <input type="text" name="soyad" value="{{ kullanici.soyad }}" required>
+            </div>
+
+            <div class="yonetici-filter-group">
+                <label>Kullanıcı Adı</label>
+                <input type="text" name="kullanici_adi" value="{{ kullanici.kullanici_adi }}" required>
+            </div>
+
+            <div class="yonetici-filter-group">
+                <label>E-Posta</label>
+                <input type="email" name="email" value="{{ kullanici.email }}" required>
+            </div>
+
+            <div class="yonetici-filter-group">
+                <label>Yeni Şifre</label>
+                <input type="password" name="sifre" placeholder="Boş bırakılırsa değişmez.">
+            </div>
+
+            <div class="yonetici-filter-group">
+                <label>Telefon</label>
+                <input type="text" name="telefon" value="{{ kurye.telefon }}" required>
+            </div>
+
+            <div class="yonetici-filter-group">
+                <label>Bağlı Şube</label>
+
+                <select name="sube_id" required>
+
+                    {% for sube in subeler %}
+                    <option value="{{ sube.id }}" {% if kurye.sube_id==sube.id %} selected {% endif %}>
+                        {{ sube.sube_ad }}
+                    </option>
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="yonetici-filter-buttons">
+
+                <button type="submit" class="yonetici-menu-button">
+                    Değişiklikleri Kaydet
+                </button>
+
+                <a href="{{ url_for('main.yonetici_kuryeler') }}" class="yonetici-menu-button">
+                    İptal
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

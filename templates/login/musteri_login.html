@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Müşteri Girişi
+{% endblock %}
+
+{% block content %}
+
+<div class="login-page">
+
+    <div class="login-box">
+
+        <iconify-icon icon="fa-solid:user-tag"></iconify-icon>
+
+        <h1>
+            Müşteri Girişi
+        </h1>
+
+        <form method="POST">
+
+            <div class="form-group">
+
+                <label>
+                    E-posta
+                </label>
+
+                <input type="email" id="email" name="email" placeholder="E-posta adresinizi girin" required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Şifre
+                </label>
+
+                <input type="password" id="sifre" name="sifre" placeholder="Şifrenizi girin" required>
+
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">
+                Giriş Yap
+            </button>
+
+        </form>
+
+
+        <!-- =========================
+             KAYIT OL
+             ========================= -->
+
+        <div class="login-register">
+
+            <span>
+                Hesabınız yok mu?
+            </span>
+
+            <a href="{{ url_for('main.musteri_kayit') }}">
+                Kayıt Ol
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

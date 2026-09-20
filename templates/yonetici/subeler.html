@@ -1,0 +1,238 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Şubeler
+{% endblock %}
+
+{% block content %}
+
+<div class="yonetici-dashboard">
+
+    <!-- =========================
+         BAŞLIK
+         ========================= -->
+
+    <div class="yonetici-header">
+
+        <div>
+
+            <h1>Şubeler</h1>
+
+            <p>
+                Sistemde kayıtlı tüm şubeleri görüntüleyebilir
+                ve filtreleyebilirsiniz.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FİLTRELEME
+         ========================= -->
+
+    <div class="yonetici-section">
+
+        <div class="yonetici-section-header">
+
+            <h2>Şube Filtreleme</h2>
+
+        </div>
+
+
+        <form method="GET" action="{{ url_for('main.yonetici_subeler') }}">
+
+            <div class="yonetici-filter-group">
+
+                <label for="sube_ad">
+                    Şube Adı
+                </label>
+
+                <input type="text" id="sube_ad" name="sube_ad" placeholder="Şube adı giriniz" value="{{ sube_ad }}">
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label for="il">
+                    İl
+                </label>
+
+                <input type="text" id="il" name="il" placeholder="İl giriniz" value="{{ il }}">
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label for="ilce">
+                    İlçe
+                </label>
+
+                <input type="text" id="ilce" name="ilce" placeholder="İlçe giriniz" value="{{ ilce }}">
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label for="telefon">
+                    Telefon
+                </label>
+
+                <input type="text" id="telefon" name="telefon" placeholder="Telefon giriniz" value="{{ telefon }}">
+
+            </div>
+
+
+            <div style="margin-top: 20px;">
+
+                <button type="submit" class="yonetici-menu-button">
+                    Filtrele
+                </button>
+
+                <a href="{{ url_for('main.yonetici_subeler') }}" class="yonetici-menu-button">
+                    Filtreleri Temizle
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================
+         ŞUBE TABLOSU
+         ========================= -->
+
+    <div class="yonetici-section">
+
+        <div class="yonetici-section-header">
+
+            <h2>Şubeler</h2>
+
+            <!-- YENİ ŞUBE EKLE BUTONU -->
+
+            <a href="{{ url_for('main.yonetici_sube_ekle') }}" class="yonetici-menu-button">
+                + Yeni Şube Ekle
+            </a>
+
+        </div>
+
+
+        <div class="yonetici-table-container">
+
+            <table class="yonetici-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Şube Adı</th>
+                        <th>İl</th>
+                        <th>İlçe</th>
+                        <th>Adres</th>
+                        <th>Telefon</th>
+                        <th>İşlemler</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for sube in subeler %}
+
+                    <tr>
+
+                        <td>
+                            {{ sube.id }}
+                        </td>
+
+                        <td>
+                            {{ sube.sube_ad }}
+                        </td>
+
+                        <td>
+                            {{ sube.il }}
+                        </td>
+
+                        <td>
+                            {{ sube.ilce }}
+                        </td>
+
+                        <td>
+                            {{ sube.adres }}
+                        </td>
+
+                        <td>
+                            {{ sube.telefon }}
+                        </td>
+
+                        <td>
+
+                            <!-- DÜZENLE BUTONU -->
+
+                            <a href="{{ url_for('main.yonetici_sube_duzenle', sube_id=sube.id) }}"
+                                class="yonetici-menu-button">
+                                Düzenle
+                            </a>
+
+
+                            <!-- SİL BUTONU -->
+
+                            <form method="POST" action="{{ url_for('main.yonetici_sube_sil', sube_id=sube.id) }}"
+                                style="display: inline;"
+                                onsubmit="return confirm('Bu şubeyi silmek istediğinizden emin misiniz?');">
+
+                                <button type="submit" class="yonetici-menu-button">
+                                    Sil
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="7">
+                            Filtrelere uygun şube bulunamadı.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         GERİ DÖN
+         ========================= -->
+
+    <div style="margin-top: 20px;">
+
+        <a href="{{ url_for('main.yonetici_panel') }}" class="yonetici-menu-button">
+            Yönetici Paneline Dön
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

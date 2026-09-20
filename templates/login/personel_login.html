@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Personel Girişi
+{% endblock %}
+
+{% block content %}
+
+<div class="personel-login-container">
+
+    <div class="login-card personel-login-card">
+
+        <iconify-icon class="personel-login-icon" icon="mdi:user-group"></iconify-icon>
+
+        <h2>Personel Girişi</h2>
+
+        <!-- SADECE ŞUBE PERSONELİ / KURYE SEÇİMİ -->
+        <div class="personel-secim">
+
+            <button type="button" class="personel-option active" onclick="personelSec('sube', this)">
+                <iconify-icon icon="griddy-icons:building-filled"></iconify-icon> Şube Personeli
+            </button>
+
+            <button type="button" class="personel-option" onclick="personelSec('kurye', this)">
+                <iconify-icon icon="fa6-solid:truck"></iconify-icon> Kurye
+            </button>
+
+        </div>
+
+
+        <!-- GİRİŞ FORMU -->
+        <form method="POST">
+
+            <input type="hidden" name="personel_turu" id="personel_turu" value="sube">
+
+
+            <div class="personel-form-group">
+
+                <label for="email">E-posta</label>
+
+                <input type="email" id="email" name="email" placeholder="E-posta adresinizi girin" required>
+
+            </div>
+
+
+            <div class="personel-form-group">
+
+                <label for="sifre">Şifre</label>
+
+                <input type="password" id="sifre" name="sifre" placeholder="Şifrenizi girin" required>
+
+            </div>
+
+
+            <button type="submit" class="personel-login-btn">
+                Giriş Yap
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function personelSec(tur, buton) {
+
+        document.getElementById("personel_turu").value = tur;
+
+        document.querySelectorAll(".personel-option").forEach(function (btn) {
+            btn.classList.remove("active");
+        });
+
+        buton.classList.add("active");
+    }
+
+</script>
+
+{% endblock %}

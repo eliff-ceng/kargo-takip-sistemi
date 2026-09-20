@@ -1,0 +1,296 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kargolarım
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+    <!-- ========================= -->
+    <!-- BAŞLIK -->
+    <!-- ========================= -->
+
+    <div class="panel-header">
+
+        <h1>
+            <iconify-icon icon="noto:package"></iconify-icon>
+            Kargolarım
+        </h1>
+
+        <p>
+            Gönderdiğiniz ve aldığınız kargoların bilgileri
+        </p>
+
+    </div>
+
+
+    {% if kargolar %}
+
+    <div class="panel-cards">
+
+        {% for kargo in kargolar %}
+
+        <div class="panel-card">
+
+            <!-- ========================= -->
+            <!-- KARGO İKONU -->
+            <!-- ========================= -->
+
+            <div class="panel-icon">
+
+                <iconify-icon icon="noto:package"></iconify-icon>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- TAKİP NUMARASI -->
+            <!-- ========================= -->
+
+            <h3>
+
+                {{ kargo.takip_no }}
+
+            </h3>
+
+
+            <hr>
+
+
+            <!-- ========================= -->
+            <!-- GÖNDERİCİ -->
+            <!-- ========================= -->
+
+            <p>
+
+                <strong>
+                    Gönderici:
+                </strong>
+
+                {{ kargo.gonderici }}
+
+            </p>
+
+
+            <!-- ========================= -->
+            <!-- ALICI -->
+            <!-- ========================= -->
+
+            <p>
+
+                <strong>
+                    Alıcı:
+                </strong>
+
+                {{ kargo.alici }}
+
+            </p>
+
+
+            <!-- ========================= -->
+            <!-- GÖNDERİM TARİHİ -->
+            <!-- ========================= -->
+
+            <p>
+
+                <strong>
+                    Gönderim Tarihi:
+                </strong>
+
+                {{ kargo.gonderim_tarihi.strftime('%d.%m.%Y %H:%M') }}
+
+            </p>
+
+
+            <!-- ========================= -->
+            <!-- AĞIRLIK -->
+            <!-- ========================= -->
+
+            <p>
+
+                <strong>
+                    Ağırlık:
+                </strong>
+
+                {{ kargo.agirlik }} kg
+
+            </p>
+
+
+            <!-- ========================= -->
+            <!-- KARGO ÜCRETİ -->
+            <!-- ========================= -->
+
+            <p>
+
+                <strong>
+                    Kargo Ücreti:
+                </strong>
+
+                {{ kargo.ucret }} ₺
+
+            </p>
+
+
+            <!-- ========================= -->
+            <!-- GÜNCEL DURUM -->
+            <!-- ========================= -->
+
+            <p>
+
+                <strong>
+                    Güncel Durum:
+                </strong>
+
+                {{ kargo.durum }}
+
+            </p>
+
+
+            <!-- ========================= -->
+            <!-- TESLİM TARİHİ -->
+            <!-- ========================= -->
+
+            {% if kargo.teslim_tarihi %}
+
+            <p>
+
+                <strong>
+                    Teslim Tarihi:
+                </strong>
+
+                {{ kargo.teslim_tarihi.strftime('%d.%m.%Y %H:%M') }}
+
+            </p>
+
+            {% else %}
+
+            <p>
+
+                <strong>
+                    Teslim Tarihi:
+                </strong>
+
+                Henüz teslim edilmedi.
+
+            </p>
+
+            {% endif %}
+
+
+            <hr>
+
+
+            <!-- ========================= -->
+            <!-- KARGO BUTONLARI -->
+            <!-- ========================= -->
+
+            <div class="kargo-actions">
+
+                <!-- KARGO HAREKETLERİ -->
+
+                <a href="{{ url_for(
+                        'main.musteri_kargo_detay',
+                        kargo_id=kargo.id
+                    ) }}" class="panel-button kargo-action-button">
+
+                    🔎 Kargo Hareketlerini Gör
+
+                </a>
+
+
+                <!-- ========================= -->
+                <!-- DEĞERLENDİRME -->
+                <!-- ========================= -->
+
+                {% if kargo.durum == "Teslim Edildi" %}
+
+
+                {% if kargo.id in degerlendirilmis_kargolar %}
+
+                <!-- DAHA ÖNCE DEĞERLENDİRİLMİŞ -->
+
+                <div class="kargo-degerlendirme-durum">
+
+                    ✓ Bu kargoyu değerlendirdiniz.
+
+                </div>
+
+
+                {% else %}
+
+
+                <!-- DEĞERLENDİRME BUTONU -->
+
+                <a href="{{ url_for(
+                            'main.kargo_degerlendir',
+                            kargo_id=kargo.id
+                        ) }}" class="panel-button kargo-action-button">
+
+                    ⭐ Teslimatı Değerlendir
+
+                </a>
+
+
+                {% endif %}
+
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- ========================= -->
+    <!-- KARGO YOK -->
+    <!-- ========================= -->
+
+    <div class="panel-card text-center">
+
+        <div class="panel-icon">
+
+            📦
+
+        </div>
+
+
+        <h3>
+
+            Henüz kargonuz bulunmuyor.
+
+        </h3>
+
+
+        <p>
+
+            Adınıza kayıtlı herhangi bir
+            kargo bulunmamaktadır.
+
+        </p>
+
+
+        <a href="{{ url_for('main.musteri_kargo_olustur') }}" class="panel-button">
+
+            Kargo Oluştur
+
+        </a>
+
+    </div>
+
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

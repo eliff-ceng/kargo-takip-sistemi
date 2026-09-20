@@ -1,0 +1,355 @@
+/* =========================================================
+   YÖNETİCİ DASHBOARD
+   ========================================================= */
+
+.yonetici-dashboard {
+    width: 92%;
+    max-width: 1200px;
+    margin: 100px auto 60px auto;
+}
+
+
+/* =========================================================
+   BAŞLIK
+   ========================================================= */
+
+.yonetici-header {
+    margin-bottom: 35px;
+}
+
+.yonetici-header h1 {
+    color: #1f2937;
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.yonetici-header p {
+    color: #6b7280;
+    font-size: 16px;
+}
+
+.yonetici-header strong {
+    color: #1f2937;
+}
+
+
+/* =========================================================
+   İSTATİSTİKLER
+   ========================================================= */
+
+.yonetici-istatistikler {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.yonetici-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 22px;
+
+    background-color: white;
+
+    border-radius: 14px;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+
+    box-sizing: border-box;
+}
+
+.yonetici-stat-icon {
+    width: 50px;
+    height: 50px;
+
+    min-width: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background-color: #eff6ff;
+    color: #2563eb;
+}
+
+.yonetici-stat-icon iconify-icon {
+    font-size: 27px;
+}
+
+.yonetici-stat-card span {
+    display: block;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+    margin-bottom: 5px;
+}
+
+.yonetici-stat-card strong {
+    display: block;
+
+    color: #1f2937;
+
+    font-size: 25px;
+}
+
+
+/* =========================================================
+   YÖNETİM MENÜLERİ
+   ========================================================= */
+
+.yonetici-menu {
+    display: grid;
+
+    /* 5 kart aynı satırda */
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 40px;
+}
+
+.yonetici-menu-card {
+    min-width: 0;
+
+    padding: 25px 15px;
+
+    background-color: white;
+
+    border-radius: 14px;
+
+    text-align: center;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.yonetici-menu-card>iconify-icon {
+    font-size: 42px;
+
+    color: #2563eb;
+
+    margin-bottom: 12px;
+}
+
+.yonetici-menu-card h3 {
+    color: #1f2937;
+
+    font-size: 17px;
+
+    margin-bottom: 8px;
+}
+
+.yonetici-menu-card p {
+    color: #6b7280;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+
+    min-height: 50px;
+
+    margin-bottom: 18px;
+
+    flex: 1;
+}
+
+.yonetici-menu-button {
+    display: inline-block;
+
+    padding: 9px 13px;
+
+    background-color: #2563eb;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.yonetici-menu-button:hover {
+    background-color: #1d4ed8;
+
+    color: white;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   YÖNETİCİ BÖLÜMLERİ
+   ========================================================= */
+
+.yonetici-section {
+    margin-bottom: 35px;
+
+    background-color: white;
+
+    border-radius: 14px;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+
+    overflow: hidden;
+}
+
+.yonetici-section-header {
+    padding: 20px 25px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.yonetici-section-header h2 {
+    color: #1f2937;
+
+    font-size: 20px;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   TABLO
+   ========================================================= */
+
+.yonetici-table-container {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.yonetici-table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.yonetici-table th {
+    padding: 14px 18px;
+
+    background-color: #f8fafc;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-align: left;
+
+    white-space: nowrap;
+}
+
+.yonetici-table td {
+    padding: 14px 18px;
+
+    border-top: 1px solid #e5e7eb;
+
+    color: #4b5563;
+
+    font-size: 13px;
+}
+
+.yonetici-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+
+/* =========================================================
+   FİLTRELER
+   ========================================================= */
+
+.yonetici-filter-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.yonetici-filter-group label {
+    width: 100px;
+    min-width: 100px;
+    margin-right: 15px;
+    margin-bottom: 0;
+}
+
+.yonetici-filter-group input,
+.yonetici-filter-group select {
+    flex: 1;
+}
+
+
+/* =========================================================
+   RESPONSIVE - ORTA EKRAN
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .yonetici-menu {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .yonetici-istatistikler {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .yonetici-menu {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+/* =========================================================
+   TELEFON
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .yonetici-dashboard {
+        width: 94%;
+
+        margin-top: 80px;
+    }
+
+    .yonetici-istatistikler {
+        grid-template-columns: 1fr;
+    }
+
+    .yonetici-menu {
+        grid-template-columns: 1fr;
+    }
+
+    .yonetici-header h1 {
+        font-size: 26px;
+    }
+
+    .yonetici-menu-card {
+        padding: 22px 18px;
+    }
+
+}

@@ -1,0 +1,202 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Hizmetlerimiz - Kargo Takip Sistemi
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 pt-4">
+
+    <!-- =========================
+         BAŞLIK
+         ========================= -->
+
+    <div class="text-center mb-5">
+
+        <h1>
+            Hizmetlerimiz
+        </h1>
+
+        <p class="text-muted">
+            Kargo gönderim ve takip süreçlerini kolaylaştıran
+            hizmetlerimiz.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         HİZMETLER
+         ========================= -->
+
+    <div class="row g-4">
+
+
+        <!-- KARGO OLUŞTURMA -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <iconify-icon icon="mdi:package-variant-plus"
+                        style="font-size: 50px; color: #2563eb;"></iconify-icon>
+
+                    <h3 class="mt-3">
+                        Kargo Oluşturma
+                    </h3>
+
+                    <p class="text-muted">
+                        Gönderici ve alıcı bilgilerini girerek
+                        hızlı ve kolay şekilde yeni kargo
+                        gönderileri oluşturabilirsiniz.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- KARGO TAKİBİ -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <iconify-icon icon="mdi:magnify" style="font-size: 50px; color: #2563eb;"></iconify-icon>
+
+                    <h3 class="mt-3">
+                        Kargo Takibi
+                    </h3>
+
+                    <p class="text-muted">
+                        Takip numaranızı kullanarak kargonuzun
+                        güncel durumunu ve hareket geçmişini
+                        görüntüleyebilirsiniz.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ŞUBE HİZMETLERİ -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <iconify-icon icon="mdi:office-building" style="font-size: 50px; color: #2563eb;"></iconify-icon>
+
+                    <h3 class="mt-3">
+                        Şube Hizmetleri
+                    </h3>
+
+                    <p class="text-muted">
+                        Şubeler üzerinden kargoların oluşturulması,
+                        yönetilmesi ve kuryelere atanması
+                        gerçekleştirilebilir.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- KURYE TESLİMATI -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <iconify-icon icon="fa6-solid:truck" style="font-size: 50px; color: #2563eb;"></iconify-icon>
+
+                    <h3 class="mt-3">
+                        Kurye Teslimatı
+                    </h3>
+
+                    <p class="text-muted">
+                        Kuryeler kendilerine atanmış kargoları
+                        görüntüleyebilir, dağıtıma çıkarabilir
+                        ve teslimat durumunu güncelleyebilir.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- GELİŞMİŞ FİLTRELEME -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <iconify-icon icon="mdi:filter-multiple" style="font-size: 50px; color: #2563eb;"></iconify-icon>
+
+                    <h3 class="mt-3">
+                        Gelişmiş Filtreleme
+                    </h3>
+
+                    <p class="text-muted">
+                        Kargolar takip numarası, gönderici,
+                        alıcı, durum, kurye ve tarih gibi
+                        kriterlere göre filtrelenebilir.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- YÖNETİCİ İSTATİSTİKLERİ -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <iconify-icon icon="mdi:chart-bar" style="font-size: 50px; color: #2563eb;"></iconify-icon>
+
+                    <h3 class="mt-3">
+                        Yönetici İstatistikleri
+                    </h3>
+
+                    <p class="text-muted">
+                        Kargo durumları, aylık kargo sayıları,
+                        şube ve kurye dağılımları grafiklerle
+                        görüntülenebilir.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

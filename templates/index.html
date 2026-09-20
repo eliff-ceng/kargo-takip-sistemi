@@ -1,0 +1,210 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Ana Sayfa - Kargo Takip Sistemi
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================
+     ANA SAYFA
+     ========================= -->
+
+<div class="ana-sayfa-baslik">
+
+    <h1>
+        Kargo Takip Sistemine Hoş Geldiniz
+    </h1>
+
+    <p>
+        Kargonuzu hızlı ve güvenilir bir şekilde takip etmek için
+        size uygun olan giriş türünü seçiniz.
+    </p>
+
+</div>
+
+
+<!-- =========================
+     GİRİŞ TÜRLERİ
+     ========================= -->
+
+<div class="login-types">
+
+
+    <!-- Müşteri -->
+
+    <div class="login-card">
+
+        <div class="login-icon">
+
+            <iconify-icon icon="fa-solid:user-tag"></iconify-icon>
+
+        </div>
+
+        <h3>
+            Müşteri Girişi
+        </h3>
+
+        <p>
+            Kargolarınızı takip etmek ve gönderileriniz
+            hakkında bilgi almak için giriş yapın.
+        </p>
+
+        <a href="{{ url_for('main.musteri_login') }}" class="login-button">
+            Müşteri Girişi
+        </a>
+
+    </div>
+
+
+    <!-- Yönetici -->
+
+    <div class="login-card">
+
+        <div class="login-icon">
+
+            <iconify-icon icon="mingcute:user-star-fill"></iconify-icon>
+
+        </div>
+
+        <h3>
+            Yönetici Girişi
+        </h3>
+
+        <p>
+            Kullanıcıları, şubeleri, personelleri ve kargoları
+            yönetmek için giriş yapın.
+        </p>
+
+        <a href="{{ url_for('main.yonetici_login') }}" class="login-button">
+            Yönetici Girişi
+        </a>
+
+    </div>
+
+
+    <!-- Personel -->
+
+    <div class="login-card">
+
+        <div class="login-icon">
+
+            <iconify-icon icon="mdi:user-group"></iconify-icon>
+
+        </div>
+
+        <h3>
+            Personel Girişi
+        </h3>
+
+        <p>
+            Şube ve kargo işlemlerini yönetmek için
+            personel hesabınızla giriş yapın.
+        </p>
+
+        <a href="{{ url_for('main.personel_login') }}" class="login-button">
+            Personel Girişi
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     ÖZELLİKLER
+     ========================= -->
+
+<div class="features">
+
+
+    <!-- Hızlı Teslimat -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+
+            <iconify-icon icon="fa7-solid:truck-fast"></iconify-icon>
+
+        </div>
+
+        <h3>
+            Hızlı Teslimat
+        </h3>
+
+        <p>
+            Kargolarınızın teslimat sürecini
+            hızlı ve düzenli şekilde yönetin.
+        </p>
+
+    </div>
+
+
+    <!-- Güvenli Taşıma -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+
+            <iconify-icon icon="mdi:security-lock"></iconify-icon>
+
+        </div>
+
+        <h3>
+            Güvenli Taşıma
+        </h3>
+
+        <p>
+            Gönderilerinizin güvenli şekilde
+            taşınması ve takip edilmesi sağlanır.
+        </p>
+
+    </div>
+
+
+    <!-- Anlık Takip -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+
+            <iconify-icon icon="at-icons:pin"></iconify-icon>
+
+        </div>
+
+        <h3>
+            Anlık Takip
+        </h3>
+
+        <p>
+            Takip numaranız ile kargonuzun
+            güncel durumunu görüntüleyebilirsiniz.
+        </p>
+
+    </div>
+
+
+    <!-- Destek -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+
+            <iconify-icon icon="griddy-icons:customer-support-filled"></iconify-icon>
+
+        </div>
+
+        <h3>
+            Destek
+        </h3>
+
+        <p>
+            Kargo süreçlerinizle ilgili ihtiyaç
+            duyduğunuzda destek alabilirsiniz.
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

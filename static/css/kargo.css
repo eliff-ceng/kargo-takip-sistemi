@@ -1,0 +1,531 @@
+/* =========================
+   KARGO TAKİP SAYFASI
+   ========================= */
+
+.kargo-takip-page {
+    width: 94%;
+    max-width: 1250px;
+    margin: 100px auto 60px auto;
+}
+
+
+/* =========================
+   KARGO TAKİP BAŞLIK
+   ========================= */
+
+.kargo-takip-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.kargo-takip-header h1 {
+    color: #1f2937;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.kargo-takip-header p {
+    color: #6b7280;
+    font-size: 16px;
+}
+
+
+/* =========================
+   TAKİP FORMU
+   ========================= */
+
+.kargo-search-card {
+    max-width: 700px;
+    margin: 0 auto 35px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+    box-sizing: border-box;
+}
+
+.kargo-search-card label {
+    display: block;
+    color: #374151;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.kargo-search-card input {
+    width: 100%;
+    height: 48px;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.kargo-search-card input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.10);
+}
+
+.kargo-search-button {
+    display: block;
+    width: 100%;
+    height: 48px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #2563eb;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.kargo-search-button:hover {
+    background-color: #1d4ed8;
+}
+
+
+/* =========================
+   KARGO SONUÇ KARTI
+   ========================= */
+
+.kargo-result-card {
+    max-width: 1100px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+    overflow: hidden;
+}
+
+.kargo-result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 25px;
+    background-color: #2563eb;
+    color: white;
+}
+
+.kargo-result-header strong {
+    font-size: 17px;
+}
+
+.kargo-result-header span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.kargo-result-body {
+    padding: 30px;
+}
+
+
+/* =========================
+   KARGO ÖZETİ
+   ========================= */
+
+.kargo-summary {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    gap: 20px;
+}
+
+.kargo-summary-item {
+    flex: 1;
+}
+
+.kargo-summary-item small {
+    display: block;
+    color: #6b7280;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.kargo-summary-item h5 {
+    color: #1f2937;
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.kargo-summary-status {
+    color: #2563eb !important;
+}
+
+
+/* =========================
+   KARGO DETAYLARI
+   ========================= */
+
+.kargo-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.kargo-detail-item {
+    padding: 16px;
+    background-color: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.kargo-detail-item span {
+    display: block;
+    color: #6b7280;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.kargo-detail-item strong {
+    display: block;
+    color: #1f2937;
+    font-size: 15px;
+}
+
+
+/* =========================
+   KARGO HAREKETLERİ
+   ========================= */
+
+.kargo-result-body hr {
+    margin: 30px 0;
+    border: 0;
+    border-top: 1px solid #e5e7eb;
+}
+
+.kargo-movements-title {
+    color: #1f2937;
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+
+/* =========================
+   KARGO TAKİP KARTI
+   ========================= */
+
+.kargo-takip-card {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
+    padding: 10px 35px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   ÜST BİLGİ
+   ========================= */
+
+.kargo-takip-baslik {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 25px;
+    box-sizing: border-box;
+}
+
+
+/* Sol taraftaki bilgiler */
+
+.kargo-takip-baslik>div:first-child {
+    flex: 1;
+    text-align: left;
+    margin-left: -20px;
+}
+
+
+/* Kargo takip numarası */
+
+.kargo-takip-baslik h3 {
+    color: #1f2937;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+
+/* Gönderici - Alıcı - Tarih */
+
+.kargo-takip-baslik p {
+    color: #6b7280;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+
+/* =========================
+   GÜNCEL DURUM
+   ========================= */
+
+.kargo-durum {
+    min-width: 160px;
+    text-align: right;
+    margin-right: -20px;
+}
+
+.kargo-durum span {
+    display: block;
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 5px;
+}
+
+.kargo-durum strong {
+    font-size: 18px;
+    color: #2563eb;
+}
+
+
+/* =========================
+   YATAY ZAMAN ÇİZELGESİ
+   ========================= */
+
+.takip-zaman-cizelgesi {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 10px 10px;
+    box-sizing: border-box;
+}
+
+.takip-zaman-cizelgesi::before {
+    content: "";
+    position: absolute;
+    top: 37px;
+    left: 8%;
+    right: 8%;
+    height: 3px;
+    background-color: #d1d5db;
+    z-index: 0;
+}
+
+
+/* =========================
+   HER ADIM
+   ========================= */
+
+.takip-adim {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0 12px;
+    text-align: center;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+
+/* =========================
+   NOKTA
+   ========================= */
+
+.takip-nokta {
+    width: 36px;
+    height: 36px;
+    margin: 0 auto 12px auto;
+    border-radius: 50%;
+    background-color: #198754;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 15px;
+    border: 4px solid white;
+    box-shadow: 0 0 0 2px #198754;
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================
+   DURUM RENKLERİ
+   ========================= */
+
+.takip-adim.completed .takip-nokta {
+    background-color: #198754;
+    box-shadow: 0 0 0 2px #198754;
+}
+
+.takip-adim.active .takip-nokta {
+    background-color: #2563eb;
+    box-shadow: 0 0 0 2px #2563eb;
+}
+
+.takip-adim.pending .takip-nokta {
+    background-color: #e5e7eb;
+    color: #6b7280;
+    box-shadow: 0 0 0 2px #d1d5db;
+}
+
+
+/* =========================
+   ADIM BİLGİLERİ
+   ========================= */
+
+.takip-bilgi {
+    padding: 0 8px;
+}
+
+.takip-bilgi h4 {
+    color: #1f2937;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.takip-bilgi p {
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.4;
+    min-height: 35px;
+    margin-bottom: 7px;
+}
+
+.takip-bilgi small {
+    font-size: 12px;
+    color: #374151;
+}
+
+
+/* =========================
+   KARGO MOBİL
+   ========================= */
+
+@media (max-width: 768px) {
+
+    .kargo-takip-page {
+        width: 94%;
+        margin-top: 80px;
+    }
+
+    .kargo-takip-header h1 {
+        font-size: 26px;
+    }
+
+    .kargo-takip-header p {
+        font-size: 14px;
+    }
+
+    .kargo-search-card {
+        padding: 22px;
+    }
+
+    .kargo-result-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        padding: 15px 20px;
+    }
+
+    .kargo-result-body {
+        padding: 20px;
+    }
+
+    .kargo-summary {
+        flex-direction: column;
+        text-align: left;
+        gap: 18px;
+    }
+
+    .kargo-summary-item {
+        border-bottom: 1px solid #f0f0f0;
+        padding-bottom: 12px;
+    }
+
+    .kargo-summary-item:last-child {
+        border-bottom: none;
+    }
+
+    .kargo-details {
+        grid-template-columns: 1fr;
+    }
+
+    .kargo-takip-card {
+        width: 100%;
+        padding: 18px 12px;
+        margin-bottom: 15px;
+    }
+
+    .kargo-takip-baslik {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    /* Mobilde sol taraf normal hizalama */
+
+    .kargo-takip-baslik>div:first-child {
+        margin-left: 0;
+    }
+
+    /* Mobilde güncel durum normal hizalama */
+
+    .kargo-durum {
+        margin-right: 0;
+        text-align: left;
+    }
+
+    .takip-zaman-cizelgesi {
+        width: 100%;
+        overflow: hidden;
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 18px;
+    }
+
+    .takip-zaman-cizelgesi::before {
+        left: 8%;
+        right: 8%;
+        top: 33px;
+    }
+
+    .takip-adim {
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 0 3px;
+    }
+
+    .takip-nokta {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+        margin-bottom: 9px;
+    }
+
+    .takip-bilgi {
+        padding: 0 2px;
+    }
+
+    .takip-bilgi h4 {
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    .takip-bilgi p {
+        font-size: 11px;
+        min-height: 30px;
+        margin-bottom: 5px;
+    }
+
+    .takip-bilgi small {
+        font-size: 10px;
+    }
+}

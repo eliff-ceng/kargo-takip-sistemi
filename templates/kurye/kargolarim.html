@@ -1,0 +1,269 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kargolarım
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 pt-4">
+
+    <!-- =========================
+         SAYFA BAŞLIĞI
+         ========================= -->
+
+    <div class="text-center mb-5">
+
+        <h1>
+            Kargolarım
+        </h1>
+
+        <p class="text-muted">
+            Size atanmış olan kargolar aşağıda listelenmektedir.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         KURYE BİLGİSİ
+         ========================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="d-flex align-items-center">
+
+                <span class="iconify me-3" data-icon="fa-solid:motorcycle" style="font-size: 45px;"></span>
+
+                <div>
+
+                    <h5 class="mb-1">
+                        {{ kullanici.ad }} {{ kullanici.soyad }}
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Kurye - {{ kurye.sube.ad }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         KARGO LİSTESİ
+         ========================= -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <h4 class="mb-0">
+                    Atanan Kargolar
+                </h4>
+
+                <span class="badge bg-primary">
+                    {{ kargolar|length }} Kargo
+                </span>
+
+            </div>
+
+
+            {% if kargolar %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Takip No
+                            </th>
+
+                            <th>
+                                Gönderici
+                            </th>
+
+                            <th>
+                                Alıcı
+                            </th>
+
+                            <th>
+                                Durum
+                            </th>
+
+                            <th>
+                                Gönderim Tarihi
+                            </th>
+
+                            <th>
+                                İşlem
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for kargo in kargolar %}
+
+                        <tr>
+
+                            <!-- TAKİP NO -->
+
+                            <td>
+
+                                <strong>
+                                    {{ kargo.takip_no }}
+                                </strong>
+
+                            </td>
+
+
+                            <!-- GÖNDERİCİ -->
+
+                            <td>
+                                {{ kargo.gonderici }}
+                            </td>
+
+
+                            <!-- ALICI -->
+
+                            <td>
+                                {{ kargo.alici }}
+                            </td>
+
+
+                            <!-- DURUM -->
+
+                            <td>
+
+                                {% if kargo.durum == "Teslim Edildi" %}
+
+                                <span class="badge bg-success">
+                                    {{ kargo.durum }}
+                                </span>
+
+                                {% elif kargo.durum == "Dağıtımda" %}
+
+                                <span class="badge bg-warning text-dark">
+                                    {{ kargo.durum }}
+                                </span>
+
+                                {% elif kargo.durum == "İptal Edildi" %}
+
+                                <span class="badge bg-danger">
+                                    {{ kargo.durum }}
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-primary">
+                                    {{ kargo.durum }}
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- GÖNDERİM TARİHİ -->
+
+                            <td>
+
+                                {% if kargo.gonderim_tarihi %}
+
+                                {{ kargo.gonderim_tarihi.strftime('%d.%m.%Y') }}
+
+                                {% else %}
+
+                                -
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- DETAY -->
+
+                            <td>
+
+                                <a href="{{ url_for(
+                                                'main.kurye_kargo_detay',
+                                                kargo_id=kargo.id
+                                            ) }}" class="btn btn-sm btn-outline-primary">
+
+                                    <span class="iconify" data-icon="fa-solid:eye"></span>
+
+                                    Detay
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <!-- KARGO YOK -->
+
+            <div class="text-center py-5">
+
+                <span class="iconify" data-icon="fa-solid:box-open" style="font-size: 65px;"></span>
+
+                <h5 class="mt-3">
+                    Henüz atanmış kargo bulunmuyor.
+                </h5>
+
+                <p class="text-muted">
+                    Size bir kargo atandığında burada görüntülenecektir.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         GERİ DÖN
+         ========================= -->
+
+    <div class="text-center mt-4 mb-5">
+
+        <a href="{{ url_for('main.kurye_panel') }}" class="btn btn-secondary">
+
+            <span class="iconify" data-icon="fa-solid:arrow-left"></span>
+
+            Kurye Paneline Dön
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

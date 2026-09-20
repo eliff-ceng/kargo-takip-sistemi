@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Müşteri Paneli
+{% endblock %}
+
+{% block content %}
+
+<div class="musteri-panel">
+
+    <!-- =========================
+         PANEL BAŞLIĞI
+         ========================= -->
+
+    <div class="panel-header">
+
+        <h1>
+            Müşteri Paneli
+        </h1>
+
+        <p>
+            Kargo Takip Sistemi
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         İKİ PANEL KARTI
+         ========================= -->
+
+    <div class="panel-cards">
+
+
+        <!-- =====================
+             KARGO OLUŞTUR
+             ===================== -->
+
+        <div class="panel-card">
+
+            <div class="panel-icon">
+
+                <iconify-icon icon="mdi:package-variant-closed">
+                </iconify-icon>
+
+            </div>
+
+            <h3>
+                Kargo Oluştur
+            </h3>
+
+            <p>
+                Yeni bir kargo oluşturabilirsiniz
+            </p>
+
+
+            <a href="{{ url_for('main.musteri_kargo_olustur') }}" class="panel-button">
+                Kargo Oluştur
+            </a>
+
+        </div>
+
+
+        <!-- =====================
+             KARGOLARIM
+             ===================== -->
+
+        <div class="panel-card">
+
+            <div class="panel-icon">
+
+                <iconify-icon icon="griddy-icons:package-filled">
+                </iconify-icon>
+
+            </div>
+
+            <h3>
+                Kargolarım
+            </h3>
+
+            <p>
+                Gönderdiğiniz ve aldığınız
+                kargoları görüntüleyebilirsiniz.
+            </p>
+
+            <a href="{{ url_for('main.kargolarim') }}" class="panel-button">
+                Kargolarımı Gör
+            </a>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

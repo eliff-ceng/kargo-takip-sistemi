@@ -1,0 +1,384 @@
+/* =========================================
+   PROFİL DÜZENLEME SAYFASI
+========================================= */
+
+.profil-page {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 45px 20px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   PROFİL KARTI
+========================================= */
+
+.profil-card {
+    width: 100%;
+    max-width: 720px;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 40px 45px;
+    box-sizing: border-box;
+
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================
+   PROFİL BAŞLIK ALANI
+========================================= */
+
+.profil-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+
+/* Profil fotoğrafı */
+
+.profil-icon {
+    width: 115px;
+    height: 115px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eef3ff;
+
+    border: 4px solid #ffffff;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+}
+
+
+/* Yüklenmiş profil fotoğrafı */
+
+.profil-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* Fotoğraf yoksa gösterilen Iconify ikonu */
+
+.profil-icon iconify-icon {
+    font-size: 65px;
+    color: #2864e8;
+}
+
+
+/* Başlık */
+
+.profil-header h1 {
+    margin: 0 0 9px;
+
+    font-size: 30px;
+    font-weight: 700;
+
+    color: #12345b;
+}
+
+
+/* Açıklama */
+
+.profil-header p {
+    margin: 0;
+
+    font-size: 15px;
+    line-height: 1.5;
+
+    color: #777777;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.profil-card form {
+    width: 100%;
+}
+
+
+/* Form grupları */
+
+.form-group {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 21px;
+}
+
+
+/* Etiketler */
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: #333333;
+}
+
+
+/* =========================================
+   INPUT VE TEXTAREA
+========================================= */
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d7dce3;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #333333;
+
+    font-size: 15px;
+    font-family: inherit;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* Input yüksekliği */
+
+.form-group input {
+    height: 46px;
+}
+
+
+/* Adres alanı */
+
+.form-group textarea {
+    min-height: 125px;
+
+    line-height: 1.5;
+
+    resize: vertical;
+}
+
+
+/* Placeholder */
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #a0a5ad;
+}
+
+
+/* Input focus */
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #2864e8;
+
+    box-shadow: 0 0 0 3px rgba(40, 100, 232, 0.10);
+
+    background: #ffffff;
+}
+
+
+/* =========================================
+   BUTON ALANI
+========================================= */
+
+.profil-actions {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+
+/* Ortak buton özellikleri */
+
+.profil-button {
+    min-height: 48px;
+
+    padding: 0 24px;
+
+    border: none;
+    border-radius: 9px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* Iconlar */
+
+.profil-button iconify-icon {
+    font-size: 19px;
+}
+
+
+/* Kaydet butonu */
+
+.profil-button[type="submit"],
+button.profil-button {
+    background: #2864e8;
+    color: #ffffff;
+
+    box-shadow: 0 4px 10px rgba(40, 100, 232, 0.20);
+}
+
+
+/* Kaydet hover */
+
+.profil-button[type="submit"]:hover,
+button.profil-button:hover {
+    background: #1f55c9;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 5px 14px rgba(40, 100, 232, 0.25);
+}
+
+
+/* Geri dön butonu */
+
+.profil-actions a.profil-button {
+    background: #eef1f5;
+    color: #333333;
+}
+
+
+/* Geri dön hover */
+
+.profil-actions a.profil-button:hover {
+    background: #e1e5eb;
+
+    color: #222222;
+
+    text-decoration: none;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   MOBİL UYUMLULUK
+========================================= */
+
+@media (max-width: 600px) {
+
+    .profil-page {
+        padding: 25px 12px;
+    }
+
+
+    .profil-card {
+        padding: 28px 20px;
+
+        border-radius: 15px;
+    }
+
+
+    .profil-icon {
+        width: 95px;
+        height: 95px;
+    }
+
+
+    .profil-icon iconify-icon {
+        font-size: 55px;
+    }
+
+
+    .profil-header h1 {
+        font-size: 25px;
+    }
+
+
+    .profil-header p {
+        font-size: 14px;
+    }
+
+
+    .profil-actions {
+        flex-direction: column;
+
+        width: 100%;
+    }
+
+
+    .profil-button {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================
+   KÜÇÜK EKRANLAR
+========================================= */
+
+@media (max-width: 400px) {
+
+    .profil-card {
+        padding: 25px 16px;
+    }
+
+
+    .profil-header h1 {
+        font-size: 23px;
+    }
+
+
+    .form-group input {
+        height: 44px;
+    }
+
+}

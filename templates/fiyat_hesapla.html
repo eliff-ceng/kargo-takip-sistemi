@@ -1,0 +1,457 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Fiyat Hesapla
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container fiyat-hesapla-page">
+
+    <!-- SAYFA BAŞLIĞI -->
+    <div class="fiyat-simple-header">
+
+        <h1>Fiyat Hesapla</h1>
+
+        <p>
+            Kargo bilgilerini girerek tahmini gönderim ücretini hesaplayabilirsiniz.
+        </p>
+
+    </div>
+
+
+    <!-- ANA KART -->
+    <div class="fiyat-simple-card">
+
+
+        <!-- SOL TARAF -->
+        <div class="fiyat-form-alani">
+
+            <h3>Kargo Bilgileri</h3>
+
+            <hr>
+
+
+            <!-- KARGO TÜRÜ -->
+            <div class="form-group">
+
+                <label for="kargo_turu">
+                    Kargo Türü
+                </label>
+
+                <select id="kargo_turu" name="kargo_turu">
+
+                    <option value="" selected disabled>
+                        Kargo türünü seçiniz
+                    </option>
+
+
+                    {% for tur in kargo_turleri %}
+
+                    <option value="{{ tur.ek_ucret }}">
+
+                        {{ tur.ad }}
+
+                        {% if tur.ek_ucret > 0 %}
+
+                        - +{{ "%.2f"|format(tur.ek_ucret) }} ₺
+
+                        {% else %}
+
+                        - Ek ücret yok
+
+                        {% endif %}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- AĞIRLIK -->
+            <div class="form-group">
+
+                <label for="agirlik">
+                    Ağırlık (kg)
+                </label>
+
+                <input type="number" id="agirlik" name="agirlik" step="0.01" min="0.01" placeholder="Örneğin: 2.50">
+
+            </div>
+
+
+            <!-- ÖLÇÜLER -->
+            <h4 class="fiyat-alt-baslik">
+                Paket Ölçüleri
+            </h4>
+
+
+            <div class="fiyat-olcu-grid">
+
+                <div class="form-group">
+
+                    <label for="desi_en">
+                        En (cm)
+                    </label>
+
+                    <input type="number" id="desi_en" step="0.01" min="0" placeholder="30">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="desi_boy">
+                        Boy (cm)
+                    </label>
+
+                    <input type="number" id="desi_boy" step="0.01" min="0" placeholder="40">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="desi_yukseklik">
+                        Yükseklik (cm)
+                    </label>
+
+                    <input type="number" id="desi_yukseklik" step="0.01" min="0" placeholder="20">
+
+                </div>
+
+            </div>
+
+
+            <small class="fiyat-desi-aciklama">
+                Desi = En × Boy × Yükseklik / 3000
+            </small>
+
+        </div>
+
+
+        <!-- SAĞ TARAF -->
+        <div class="fiyat-sonuc-alani">
+
+            <h3>Ücret Özeti</h3>
+
+            <hr>
+
+
+            <div class="fiyat-sonuc-satir">
+
+                <span>
+                    Hesaplanan Desi
+                </span>
+
+                <strong id="hesaplanan_desi">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="fiyat-sonuc-satir">
+
+                <span>
+                    Ücrete Esas Değer
+                </span>
+
+                <strong id="ucretlendirme_degeri">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="fiyat-sonuc-satir">
+
+                <span>
+                    Temel Kargo Ücreti
+                </span>
+
+                <strong id="temel_ucret_goster">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="fiyat-sonuc-satir">
+
+                <span>
+                    Kargo Türü Ek Ücreti
+                </span>
+
+                <strong id="ek_ucret_goster">
+                    —
+                </strong>
+
+            </div>
+
+
+            <!-- TOPLAM -->
+            <div class="fiyat-toplam">
+
+                <span>
+                    Tahmini Toplam
+                </span>
+
+                <strong id="ucret_goster">
+                    —
+                </strong>
+
+            </div>
+
+
+            <p class="fiyat-not">
+
+                Ücretlendirmede ağırlık ve desi değerlerinden
+                yüksek olan dikkate alınır.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const kargoTuruInput =
+        document.getElementById("kargo_turu");
+
+    const agirlikInput =
+        document.getElementById("agirlik");
+
+    const desiEn =
+        document.getElementById("desi_en");
+
+    const desiBoy =
+        document.getElementById("desi_boy");
+
+    const desiYukseklik =
+        document.getElementById("desi_yukseklik");
+
+    const hesaplananDesi =
+        document.getElementById("hesaplanan_desi");
+
+    const ucretlendirmeDegeri =
+        document.getElementById("ucretlendirme_degeri");
+
+    const temelUcretGoster =
+        document.getElementById("temel_ucret_goster");
+
+    const ekUcretGoster =
+        document.getElementById("ek_ucret_goster");
+
+    const ucretGoster =
+        document.getElementById("ucret_goster");
+
+
+    function temelUcretHesapla(
+        agirlik,
+        desi
+    ) {
+
+        const deger =
+            Math.max(
+                agirlik,
+                desi
+            );
+
+
+        if (deger <= 1) {
+
+            return 50;
+
+        }
+
+
+        if (deger <= 3) {
+
+            return 75;
+
+        }
+
+
+        if (deger <= 5) {
+
+            return 100;
+
+        }
+
+
+        return (
+            100
+            + ((deger - 5) * 20)
+        );
+
+    }
+
+
+    function hesapla() {
+
+        const agirlik =
+            parseFloat(
+                agirlikInput.value
+            );
+
+        const en =
+            parseFloat(
+                desiEn.value
+            );
+
+        const boy =
+            parseFloat(
+                desiBoy.value
+            );
+
+        const yukseklik =
+            parseFloat(
+                desiYukseklik.value
+            );
+
+
+        let desi = 0;
+
+
+        if (
+            !isNaN(en)
+            && !isNaN(boy)
+            && !isNaN(yukseklik)
+            && en > 0
+            && boy > 0
+            && yukseklik > 0
+        ) {
+
+            desi =
+                (
+                    en
+                    * boy
+                    * yukseklik
+                ) / 3000;
+
+
+            hesaplananDesi.textContent =
+                desi.toFixed(2)
+                + " desi";
+
+        }
+        else {
+
+            hesaplananDesi.textContent =
+                "—";
+
+        }
+
+
+        if (
+            isNaN(agirlik)
+            || agirlik <= 0
+        ) {
+
+            ucretlendirmeDegeri.textContent = "—";
+
+            temelUcretGoster.textContent = "—";
+
+            ucretGoster.textContent = "—";
+
+            return;
+
+        }
+
+
+        const esasDeger =
+            Math.max(
+                agirlik,
+                desi
+            );
+
+
+        ucretlendirmeDegeri.textContent =
+            esasDeger.toFixed(2);
+
+
+        const temelUcret =
+            temelUcretHesapla(
+                agirlik,
+                desi
+            );
+
+
+        temelUcretGoster.textContent =
+            temelUcret.toFixed(2)
+            + " ₺";
+
+
+        if (!kargoTuruInput.value) {
+
+            ekUcretGoster.textContent =
+                "—";
+
+            ucretGoster.textContent =
+                "Tür seçiniz";
+
+            return;
+
+        }
+
+
+        const ekUcret =
+            parseFloat(
+                kargoTuruInput.value
+            );
+
+
+        ekUcretGoster.textContent =
+            ekUcret.toFixed(2)
+            + " ₺";
+
+
+        const toplam =
+            temelUcret
+            + ekUcret;
+
+
+        ucretGoster.textContent =
+            toplam.toFixed(2)
+            + " ₺";
+
+    }
+
+
+    kargoTuruInput.addEventListener(
+        "change",
+        hesapla
+    );
+
+    agirlikInput.addEventListener(
+        "input",
+        hesapla
+    );
+
+    desiEn.addEventListener(
+        "input",
+        hesapla
+    );
+
+    desiBoy.addEventListener(
+        "input",
+        hesapla
+    );
+
+    desiYukseklik.addEventListener(
+        "input",
+        hesapla
+    );
+
+</script>
+
+{% endblock %}

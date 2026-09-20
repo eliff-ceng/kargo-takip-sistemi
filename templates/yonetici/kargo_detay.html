@@ -1,0 +1,251 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kargo Detayı
+{% endblock %}
+
+{% block content %}
+
+<div class="yonetici-dashboard">
+
+    <div class="yonetici-header">
+
+        <h1>Kargo Detayı</h1>
+
+        <p>
+            {{ kargo.takip_no }} numaralı kargonun detayları
+        </p>
+
+    </div>
+
+
+    <div class="yonetici-section">
+
+        <h2>Kargo Bilgileri</h2>
+
+        <table class="yonetici-table">
+
+            <tr>
+                <th>ID</th>
+                <td>{{ kargo.id }}</td>
+            </tr>
+
+            <tr>
+                <th>Takip No</th>
+                <td>{{ kargo.takip_no }}</td>
+            </tr>
+
+            <tr>
+                <th>Gönderici</th>
+                <td>{{ kargo.gonderici }}</td>
+            </tr>
+
+            <tr>
+                <th>Gönderici Telefon</th>
+                <td>{{ kargo.gonderici_telefon }}</td>
+            </tr>
+
+            <tr>
+                <th>Gönderici Adres</th>
+                <td>{{ kargo.gonderici_adres }}</td>
+            </tr>
+
+            <tr>
+                <th>Alıcı</th>
+                <td>{{ kargo.alici }}</td>
+            </tr>
+
+            <tr>
+                <th>Alıcı Telefon</th>
+                <td>{{ kargo.alici_telefon }}</td>
+            </tr>
+
+            <tr>
+                <th>Alıcı Adres</th>
+                <td>{{ kargo.alici_adres }}</td>
+            </tr>
+
+            <tr>
+                <th>Durum</th>
+                <td>{{ kargo.durum }}</td>
+            </tr>
+
+            <tr>
+                <th>Ağırlık</th>
+                <td>{{ kargo.agirlik }} kg</td>
+            </tr>
+
+            <tr>
+                <th>Ücret</th>
+                <td>{{ kargo.ucret }} ₺</td>
+            </tr>
+
+            <tr>
+                <th>Şube</th>
+
+                <td>
+                    {% if kargo.sube %}
+                    {{ kargo.sube.sube_ad }}
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+
+            </tr>
+
+            <tr>
+                <th>Kurye</th>
+
+                <td>
+
+                    {% if kargo.kurye and kargo.kurye.kullanici %}
+
+                    {{ kargo.kurye.kullanici.ad }}
+                    {{ kargo.kurye.kullanici.soyad }}
+
+                    {% else %}
+
+                    Atanmadı
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            <tr>
+                <th>Gönderim Tarihi</th>
+
+                <td>
+                    {{ kargo.gonderim_tarihi.strftime('%d.%m.%Y %H:%M') }}
+                </td>
+
+            </tr>
+
+            <tr>
+                <th>Teslim Tarihi</th>
+
+                <td>
+
+                    {% if kargo.teslim_tarihi %}
+
+                    {{ kargo.teslim_tarihi.strftime('%d.%m.%Y %H:%M') }}
+
+                    {% else %}
+
+                    Henüz teslim edilmedi
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <div class="yonetici-section">
+
+        <h2>Kargo Hareketleri</h2>
+
+        <div class="yonetici-table-container">
+
+            <table class="yonetici-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Durum</th>
+                        <th>Açıklama</th>
+                        <th>Şube</th>
+                        <th>Kurye</th>
+                        <th>Tarih</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for hareket in hareketler %}
+
+                    <tr>
+
+                        <td>
+                            {{ hareket.durum }}
+                        </td>
+
+                        <td>
+                            {{ hareket.aciklama }}
+                        </td>
+
+                        <td>
+
+                            {% if hareket.sube %}
+                            {{ hareket.sube.sube_ad }}
+                            {% else %}
+                            -
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if hareket.kurye and hareket.kurye.kullanici %}
+
+                            {{ hareket.kurye.kullanici.ad }}
+                            {{ hareket.kurye.kullanici.soyad }}
+
+                            {% else %}
+
+                            -
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ hareket.tarih.strftime('%d.%m.%Y %H:%M') }}
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="5">
+                            Bu kargoya ait hareket kaydı bulunmuyor.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div style="margin-top: 20px;">
+
+        <a href="{{ url_for('main.yonetici_kargo_duzenle', kargo_id=kargo.id) }}" class="yonetici-menu-button">
+            Düzenle
+        </a>
+
+        <a href="{{ url_for('main.yonetici_kargolar') }}" class="yonetici-menu-button">
+            Kargolara Dön
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

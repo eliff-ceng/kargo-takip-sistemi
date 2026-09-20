@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+
+    <!-- Iconify -->
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+        Kargo Takip Sistemi
+        {% endblock %}
+    </title>
+
+
+    <!-- =========================
+         BOOTSTRAP CSS
+         ========================= -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+
+    <!-- =========================
+         KENDİ CSS DOSYALARIMIZ
+         ========================= -->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/musteri.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/yonetici.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/personel.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/kurye.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/kargo.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profil.css') }}">
+
+</head>
+
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+         ========================= -->
+
+    {% include "includes/navbar.html" %}
+
+
+    <!-- =========================
+         SAYFA İÇERİĞİ
+         ========================= -->
+
+    <main>
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+    <!-- =========================
+         BOOTSTRAP JS
+         ========================= -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- =========================
+         KENDİ JS DOSYAMIZ
+         ========================= -->
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

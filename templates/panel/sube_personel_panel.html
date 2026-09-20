@@ -1,0 +1,457 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Şube Personeli Paneli
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 pt-4">
+
+    <!-- =========================
+         PANEL BAŞLIĞI
+         ========================= -->
+
+    <div class="mb-5">
+
+        <h1 class="mb-2">
+            Şube Personeli Paneli
+        </h1>
+
+        <p class="text-muted">
+            Hoş geldin,
+            <strong>
+                {{ kullanici.ad }} {{ kullanici.soyad }}
+            </strong>
+        </p>
+
+        <!-- KARGO YÖNETİMİ BUTONU -->
+
+        <div class="mt-3">
+
+            <a href="{{ url_for('main.subepersoneli_kargolar') }}" class="btn btn-primary">
+
+                <iconify-icon icon="mdi:package-variant-closed" style="font-size: 18px;">
+                </iconify-icon>
+
+                Kargo Yönetimi
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         PERSONEL VE ŞUBE BİLGİLERİ
+         ========================= -->
+
+    <h3 class="mb-3">
+        Personel ve Şube Bilgileri
+    </h3>
+
+    <div class="row mb-5">
+
+        <!-- PERSONEL BİLGİLERİ -->
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="card-title">
+
+                        <iconify-icon icon="mdi:account" style="font-size: 28px;">
+                        </iconify-icon>
+
+                        Personel Bilgileri
+
+                    </h4>
+
+                    <hr>
+
+                    <p>
+                        <strong>Ad Soyad:</strong>
+                        {{ kullanici.ad }} {{ kullanici.soyad }}
+                    </p>
+
+                    <p>
+                        <strong>E-posta:</strong>
+                        {{ kullanici.email }}
+                    </p>
+
+                    <p>
+                        <strong>Telefon:</strong>
+                        {{ personel.telefon }}
+                    </p>
+
+                    <p>
+                        <strong>Görev:</strong>
+                        {{ personel.gorev }}
+                    </p>
+
+                    <p>
+
+                        <strong>Durum:</strong>
+
+                        {% if personel.aktif %}
+
+                        <span class="badge badge-success">
+                            Aktif
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge badge-danger">
+                            Pasif
+                        </span>
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ŞUBE BİLGİLERİ -->
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="card-title">
+
+                        <iconify-icon icon="mdi:office-building" style="font-size: 28px;">
+                        </iconify-icon>
+
+                        Şube Bilgileri
+
+                    </h4>
+
+                    <hr>
+
+                    <p>
+                        <strong>Şube:</strong>
+                        {{ sube.sube_ad }}
+                    </p>
+
+                    <p>
+                        <strong>İl:</strong>
+                        {{ sube.il }}
+                    </p>
+
+                    <p>
+                        <strong>İlçe:</strong>
+                        {{ sube.ilce }}
+                    </p>
+
+                    <p>
+                        <strong>Adres:</strong>
+                        {{ sube.adres }}
+                    </p>
+
+                    <p>
+                        <strong>Telefon:</strong>
+                        {{ sube.telefon }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         KARGO İSTATİSTİKLERİ
+         ========================= -->
+
+    <h3 class="mb-3">
+        Kargo İstatistikleri
+    </h3>
+
+    <div class="row mb-5">
+
+        <!-- TOPLAM KARGO -->
+
+        <div class="col-md-3 mb-3">
+
+            <div class="card text-center h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <iconify-icon icon="mdi:package-variant" style="font-size: 40px;">
+                    </iconify-icon>
+
+                    <h2 class="mt-2">
+                        {{ toplam_kargo }}
+                    </h2>
+
+                    <p class="mb-0">
+                        Toplam Kargo
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BEKLEYEN KARGO -->
+
+        <div class="col-md-3 mb-3">
+
+            <div class="card text-center h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <iconify-icon icon="mdi:clock-outline" style="font-size: 40px;">
+                    </iconify-icon>
+
+                    <h2 class="mt-2">
+                        {{ bekleyen_kargo }}
+                    </h2>
+
+                    <p class="mb-0">
+                        Bekleyen Kargo
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TESLİM EDİLEN -->
+
+        <div class="col-md-3 mb-3">
+
+            <div class="card text-center h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <iconify-icon icon="mdi:package-check" style="font-size: 40px;">
+                    </iconify-icon>
+
+                    <h2 class="mt-2">
+                        {{ teslim_edilen_kargo }}
+                    </h2>
+
+                    <p class="mb-0">
+                        Teslim Edilen
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- KURYE ATANAN -->
+
+        <div class="col-md-3 mb-3">
+
+            <div class="card text-center h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <iconify-icon icon="fa6-solid:truck" style="font-size: 40px;">
+                    </iconify-icon>
+
+                    <h2 class="mt-2">
+                        {{ kurye_atanan_kargo }}
+                    </h2>
+
+                    <p class="mb-0">
+                        Kurye Atanan
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ŞUBE KARGOLARI
+         ========================= -->
+
+    <div class="card mb-5 shadow-sm">
+
+        <div class="card-body">
+
+            <h3 class="mb-4">
+
+                <iconify-icon icon="mdi:package-variant-closed" style="font-size: 30px;">
+                </iconify-icon>
+
+                Şubedeki Kargolar
+
+            </h3>
+
+
+            {% if kargolar %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Takip No
+                            </th>
+
+                            <th>
+                                Gönderici
+                            </th>
+
+                            <th>
+                                Alıcı
+                            </th>
+
+                            <th>
+                                Durum
+                            </th>
+
+                            <th>
+                                Kurye
+                            </th>
+
+                            <th>
+                                Gönderim Tarihi
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for kargo in kargolar %}
+
+                        <tr>
+
+                            <td>
+
+                                <strong>
+                                    {{ kargo.takip_no }}
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+                                {{ kargo.gonderici }}
+                            </td>
+
+
+                            <td>
+                                {{ kargo.alici }}
+                            </td>
+
+
+                            <td>
+
+                                {% if kargo.durum == "Teslim Edildi" %}
+
+                                <span class="badge badge-success">
+                                    {{ kargo.durum }}
+                                </span>
+
+                                {% elif kargo.durum == "Dağıtımda" %}
+
+                                <span class="badge badge-warning">
+                                    {{ kargo.durum }}
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge badge-info">
+                                    {{ kargo.durum }}
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if kargo.kurye %}
+
+                                <iconify-icon icon="fa6-solid:truck">
+                                </iconify-icon>
+
+                                {{ kargo.kurye.kullanici.ad }}
+                                {{ kargo.kurye.kullanici.soyad }}
+
+                                {% else %}
+
+                                <span class="text-muted">
+                                    Kurye Atanmadı
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {{ kargo.gonderim_tarihi.strftime("%d.%m.%Y") }}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+            <div class="text-center p-5">
+
+                <iconify-icon icon="mdi:package-variant-remove" style="font-size: 50px;">
+                </iconify-icon>
+
+                <p class="mt-3 mb-0">
+                    Şubenize ait kayıtlı kargo bulunmamaktadır.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

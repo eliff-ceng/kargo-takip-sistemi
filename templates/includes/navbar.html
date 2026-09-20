@@ -1,0 +1,169 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+
+    <a class="navbar-brand" href="{{ url_for('main.index') }}">
+        Kargo Takip Sistemi
+    </a>
+
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+
+        <span class="navbar-toggler-icon"></span>
+
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+
+
+        <ul class="navbar-nav mr-auto">
+
+
+            <li class="nav-item">
+
+                <a class="nav-link" href="{{ url_for('main.hakkimizda') }}">
+                    Hakkımızda
+                </a>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <a class="nav-link" href="{{ url_for('main.hizmetlerimiz') }}">
+                    Hizmetlerimiz
+                </a>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <a class="nav-link" href="{{ url_for('main.iletisim') }}">
+                    İletişim
+                </a>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <a class="nav-link" href="{{ url_for('main.fiyat_hesapla') }}">
+                    Fiyat Hesapla
+                </a>
+
+            </li>
+
+        </ul>
+
+
+        <!-- ================================================== -->
+        <!-- GİRİŞ YAPILMAMIŞ / LOGIN EKRANI -->
+        <!-- ================================================== -->
+
+        {% if not session.get("kullanici_id")
+        or request.endpoint in [
+        "main.musteri_login",
+        "main.personel_login",
+        "main.yonetici_login"
+        ] %}
+
+
+        <form action="{{ url_for('main.genel_kargo_takip') }}" method="POST" class="form-inline mt-2 mt-md-0 ml-3">
+
+            <input class="form-control mr-sm-2" type="text" name="takip_no" placeholder="Takip No" aria-label="Takip No"
+                required>
+
+            <button class="btn btn-light my-2 my-sm-0" type="submit" title="Kargo Takip">
+
+                <iconify-icon icon="ic:sharp-search"></iconify-icon>
+
+            </button>
+
+        </form>
+
+
+        {% endif %}
+
+
+        <!-- ================================================== -->
+        <!-- GİRİŞ YAPILMIŞ -->
+        <!-- ================================================== -->
+
+        {% if session.get("kullanici_id")
+        and request.endpoint not in [
+        "main.musteri_login",
+        "main.personel_login",
+        "main.yonetici_login"
+        ] %}
+
+
+        <ul class="navbar-nav ml-3">
+
+
+            <!-- BİLDİRİMLER -->
+
+            <li class="nav-item">
+
+                <a class="nav-link bildirim-nav-link" href="{{ url_for('main.bildirimler') }}">
+
+                    <span class="bildirim-zil">
+
+                        <iconify-icon icon="bi:bell-fill"></iconify-icon>
+
+                        {% if okunmamis_bildirim_sayisi > 0 %}
+
+                        <span class="bildirim-badge">
+                            {{ okunmamis_bildirim_sayisi }}
+                        </span>
+
+                        {% endif %}
+
+                    </span>
+
+                    Bildirimler
+
+                </a>
+
+            </li>
+
+
+            <!-- PROFİL -->
+
+            <li class="nav-item">
+
+                <a class="nav-link" href="{{ url_for('main.profilim') }}">
+
+                    <iconify-icon icon="boxicons:user-filled"></iconify-icon>
+
+                    Profilim
+
+                </a>
+
+            </li>
+
+
+            <!-- ÇIKIŞ -->
+
+            <li class="nav-item">
+
+                <a class="nav-link" href="{{ url_for('main.logout') }}">
+
+                    <iconify-icon icon="garden:exit-fill-16"></iconify-icon>
+
+                    Çıkış Yap
+
+                </a>
+
+            </li>
+
+
+        </ul>
+
+
+        {% endif %}
+
+
+    </div>
+
+</nav>

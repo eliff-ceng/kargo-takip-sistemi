@@ -1,0 +1,417 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kurye Paneli
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 pt-4">
+
+    <!-- =========================
+         HOŞ GELDİN
+         ========================= -->
+
+    <div class="text-center mb-5">
+
+        <h1>
+            Kurye Paneli
+        </h1>
+
+        <p class="text-muted">
+            Hoş geldin,
+            <strong>
+                {{ kullanici.ad }} {{ kullanici.soyad }}
+            </strong>
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         KURYE BİLGİLERİ
+         ========================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-3 text-center">
+
+                    <div class="mb-3">
+
+                        <span class="iconify" data-icon="fa-solid:motorcycle" style="font-size: 65px;">
+                        </span>
+
+                    </div>
+
+                    <h4>
+                        {{ kullanici.ad }}
+                        {{ kullanici.soyad }}
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Kurye
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-9">
+
+                    <div class="row">
+
+                        <!-- KULLANICI ADI -->
+
+                        <div class="col-md-6 mb-3">
+
+                            <strong>
+                                Kullanıcı Adı
+                            </strong>
+
+                            <p class="mb-0">
+                                {{ kullanici.kullanici_adi }}
+                            </p>
+
+                        </div>
+
+
+                        <!-- E-POSTA -->
+
+                        <div class="col-md-6 mb-3">
+
+                            <strong>
+                                E-posta
+                            </strong>
+
+                            <p class="mb-0">
+                                {{ kullanici.email }}
+                            </p>
+
+                        </div>
+
+
+                        <!-- TELEFON -->
+
+                        <div class="col-md-6 mb-3">
+
+                            <strong>
+                                Telefon
+                            </strong>
+
+                            <p class="mb-0">
+                                {{ kullanici.telefon or "Belirtilmemiş" }}
+                            </p>
+
+                        </div>
+
+
+                        <!-- ŞUBE -->
+
+                        <div class="col-md-6 mb-3">
+
+                            <strong>
+                                Şube
+                            </strong>
+
+                            <p class="mb-0">
+
+                                {% if sube %}
+
+                                {{ sube.sube_ad }}
+
+                                {% else %}
+
+                                Belirtilmemiş
+
+                                {% endif %}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         İSTATİSTİKLER
+         ========================= -->
+
+    <div class="row mb-4">
+
+
+        <!-- TOPLAM KARGO -->
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <span class="iconify" data-icon="fa-solid:box" style="font-size: 45px;">
+                    </span>
+
+                    <h5 class="mt-3">
+                        Toplam Kargo
+                    </h5>
+
+                    <h2>
+                        {{ toplam_kargo }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BEKLEYEN KARGO -->
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <span class="iconify" data-icon="fa-solid:truck" style="font-size: 45px;">
+                    </span>
+
+                    <h5 class="mt-3">
+                        Bekleyen Kargo
+                    </h5>
+
+                    <h2>
+                        {{ bekleyen_kargo }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TESLİM EDİLEN -->
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <span class="iconify" data-icon="fa-solid:check-circle" style="font-size: 45px;">
+                    </span>
+
+                    <h5 class="mt-3">
+                        Teslim Edilen
+                    </h5>
+
+                    <h2>
+                        {{ teslim_edilen_kargo }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         HIZLI İŞLEMLER
+         ========================= -->
+
+    <div class="d-flex justify-content-center gap-3 flex-wrap mb-5">
+
+        <a href="{{ url_for('main.kurye_kargolarim') }}" class="btn btn-primary btn-lg">
+
+            <span class="iconify" data-icon="fa-solid:box-open">
+            </span>
+
+            Kargolarımı Görüntüle
+
+        </a>
+
+
+        <a href="{{ url_for('main.kurye_performansim') }}" class="btn btn-outline-primary btn-lg">
+
+            <span class="iconify" data-icon="fa-solid:chart-line">
+            </span>
+
+            Performansımı Gör
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         SON ATANAN KARGOLAR
+         ========================= -->
+
+    <div class="card shadow-sm mb-5">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <h4 class="mb-0">
+                    Bana Atanan Kargolar
+                </h4>
+
+                <a href="{{ url_for('main.kurye_kargolarim') }}" class="btn btn-outline-primary btn-sm">
+                    Tümünü Gör
+                </a>
+
+            </div>
+
+
+            {% if kargolar %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Takip No
+                            </th>
+
+                            <th>
+                                Gönderici
+                            </th>
+
+                            <th>
+                                Alıcı
+                            </th>
+
+                            <th>
+                                Durum
+                            </th>
+
+                            <th>
+                                Gönderim Tarihi
+                            </th>
+
+                            <th>
+                                İşlem
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for kargo in kargolar[:5] %}
+
+                        <tr>
+
+                            <td>
+
+                                <strong>
+                                    {{ kargo.takip_no }}
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+                                {{ kargo.gonderici }}
+                            </td>
+
+
+                            <td>
+                                {{ kargo.alici }}
+                            </td>
+
+
+                            <td>
+
+                                <span class="badge bg-primary">
+
+                                    {{ kargo.durum }}
+
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                {% if kargo.gonderim_tarihi %}
+
+                                {{ kargo.gonderim_tarihi.strftime('%d.%m.%Y') }}
+
+                                {% else %}
+
+                                -
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                <a href="{{ url_for(
+                                        'main.kurye_kargo_detay',
+                                        kargo_id=kargo.id
+                                    ) }}" class="btn btn-sm btn-outline-primary">
+                                    Detay
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+            <div class="text-center py-4">
+
+                <span class="iconify" data-icon="fa-solid:box-open" style="font-size: 50px;">
+                </span>
+
+                <p class="mt-3 text-muted">
+
+                    Henüz size atanmış bir kargo bulunmuyor.
+
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

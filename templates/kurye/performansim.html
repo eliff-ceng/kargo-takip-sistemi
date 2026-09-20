@@ -1,0 +1,401 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Performansım
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 pt-4">
+
+    <!-- =========================
+         BAŞLIK
+         ========================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+
+        <div>
+            <h1 class="mb-1">
+                Performansım
+            </h1>
+
+            <p class="text-muted mb-0">
+                Teslimat istatistiklerinizi ve müşteri değerlendirmelerinizi görüntüleyebilirsiniz.
+            </p>
+        </div>
+
+        <a href="{{ url_for('main.kurye_panel') }}" class="btn btn-outline-primary">
+            <span class="iconify" data-icon="fa-solid:arrow-left"></span>
+
+            Panele Dön
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         GENEL İSTATİSTİKLER
+         ========================= -->
+
+    <div class="row mb-4">
+
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+
+                    <span class="iconify" data-icon="fa-solid:box" style="font-size: 38px;"></span>
+
+                    <h6 class="mt-3 text-muted">
+                        Toplam Kargo
+                    </h6>
+
+                    <h2>
+                        {{ toplam_kargo }}
+                    </h2>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+
+                    <span class="iconify" data-icon="fa-solid:check-circle" style="font-size: 38px;"></span>
+
+                    <h6 class="mt-3 text-muted">
+                        Teslim Edilen
+                    </h6>
+
+                    <h2>
+                        {{ teslim_edilen }}
+                    </h2>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+
+                    <span class="iconify" data-icon="fa-solid:truck" style="font-size: 38px;"></span>
+
+                    <h6 class="mt-3 text-muted">
+                        Dağıtımda
+                    </h6>
+
+                    <h2>
+                        {{ dagitimda }}
+                    </h2>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+
+                    <span class="iconify" data-icon="fa-solid:clock" style="font-size: 38px;"></span>
+
+                    <h6 class="mt-3 text-muted">
+                        Bekleyen
+                    </h6>
+
+                    <h2>
+                        {{ bekleyen }}
+                    </h2>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TESLİMAT / MEMNUNİYET
+         ========================= -->
+
+    <div class="row mb-4">
+
+        <!-- TESLİMAT PERFORMANSI -->
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4 class="mb-4">
+                        Teslimat Performansı
+                    </h4>
+
+                    <div class="d-flex justify-content-between py-3 border-bottom">
+                        <span class="text-muted">
+                            Teslimat Oranı
+                        </span>
+
+                        <strong>
+                            %{{ teslimat_orani }}
+                        </strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between py-3">
+
+                        <span class="text-muted">
+                            Ortalama Teslim Süresi
+                        </span>
+
+                        <strong>
+                            {% if ortalama_saat > 0 %}
+                            {{ ortalama_saat }} saat
+                            {% else %}
+                            Veri yok
+                            {% endif %}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MÜŞTERİ MEMNUNİYETİ -->
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4 class="mb-4">
+                        Müşteri Memnuniyeti
+                    </h4>
+
+                    {% if degerlendirme_sayisi > 0 %}
+
+                    <div class="text-center py-3">
+
+                        <h2 class="mb-2">
+                            {{ ortalama_puan }} / 5
+                        </h2>
+
+                        <div class="kurye-yildizlar mb-2">
+
+                            {% for i in range(1, 6) %}
+
+                            {% if i <= ortalama_puan %} <span class="aktif-yildiz">
+                                ★
+                                </span>
+
+                                {% else %}
+
+                                <span class="pasif-yildiz">
+                                    ★
+                                </span>
+
+                                {% endif %}
+
+                                {% endfor %}
+
+                        </div>
+
+                        <p class="text-muted mb-0">
+                            {{ degerlendirme_sayisi }} değerlendirme
+                        </p>
+
+                    </div>
+
+                    {% else %}
+
+                    <div class="text-center py-4">
+
+                        <p class="text-muted mb-0">
+                            Henüz müşteri değerlendirmesi bulunmuyor.
+                        </p>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         PUAN DAĞILIMI
+         ========================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h4 class="mb-4">
+                Puan Dağılımı
+            </h4>
+
+            {% if degerlendirme_sayisi > 0 %}
+
+            <div class="puan-dagilim-listesi">
+
+                {% for puan in [5, 4, 3, 2, 1] %}
+
+                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+
+                    <span>
+                        {{ puan }} ★
+                    </span>
+
+                    <strong>
+                        {{ puan_dagilimi[puan] }}
+                    </strong>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <p class="text-muted mb-0">
+                Henüz puan dağılımı oluşturacak değerlendirme bulunmuyor.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         SON MÜŞTERİ YORUMLARI
+         ========================= -->
+
+    <div class="card shadow-sm mb-5">
+
+        <div class="card-body">
+
+            <h4 class="mb-4">
+                Son Müşteri Yorumları
+            </h4>
+
+            {% if son_degerlendirmeler %}
+
+            {% for item in son_degerlendirmeler %}
+
+            <div class="kurye-yorum-kayit">
+
+                <div class="d-flex justify-content-between align-items-start gap-3">
+
+                    <div class="kurye-yildizlar">
+
+                        {% for i in range(1, 6) %}
+
+                        {% if i <= item.puan %} <span class="aktif-yildiz">
+                            ★
+                            </span>
+
+                            {% else %}
+
+                            <span class="pasif-yildiz">
+                                ★
+                            </span>
+
+                            {% endif %}
+
+                            {% endfor %}
+
+                    </div>
+
+                    <small class="text-muted">
+
+                        {% if item.tarih %}
+                        {{ item.tarih.strftime('%d.%m.%Y') }}
+                        {% endif %}
+
+                    </small>
+
+                </div>
+
+                {% if item.yorum %}
+
+                <p class="mt-2 mb-0">
+                    {{ item.yorum }}
+                </p>
+
+                {% else %}
+
+                <p class="mt-2 mb-0 text-muted">
+                    Yorum bırakılmadı.
+                </p>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+            {% else %}
+
+            <p class="text-muted mb-0">
+                Henüz müşteri değerlendirmesi bulunmuyor.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+    .kurye-yildizlar {
+        font-size: 22px;
+        letter-spacing: 2px;
+    }
+
+    .aktif-yildiz {
+        color: #f59e0b;
+    }
+
+    .pasif-yildiz {
+        color: #d1d5db;
+    }
+
+    .puan-dagilim-listesi {
+        max-width: 500px;
+    }
+
+    .kurye-yorum-kayit {
+        padding: 16px 0;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .kurye-yorum-kayit:last-child {
+        border-bottom: 0;
+    }
+
+    .kurye-yorum-kayit p {
+        color: #4b5563;
+        line-height: 1.5;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,883 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+Kargo Oluştur
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="container personel-kargo-olustur">
+
+
+    <!-- ================================================= -->
+    <!-- SAYFA BAŞLIĞI -->
+    <!-- ================================================= -->
+
+    <div class="panel-header">
+
+        <h1>
+
+            <iconify-icon icon="noto:package"></iconify-icon>
+
+            Kargo Oluştur
+
+        </h1>
+
+        <p>
+
+            Yeni bir kargo gönderisi oluşturabilirsiniz.
+
+        </p>
+
+    </div>
+
+
+    <div class="panel-card">
+
+
+        <form method="POST">
+
+
+            <!-- ================================================= -->
+            <!-- GÖNDERİCİ BİLGİLERİ -->
+            <!-- ================================================= -->
+
+            <h3>
+                Gönderici Bilgileri
+            </h3>
+
+            <hr>
+
+
+            <!-- GÖNDERİCİ -->
+
+            <div class="form-group">
+
+                <label>
+                    Gönderici
+                </label>
+
+                <input type="text" value="{{ kullanici.ad }} {{ kullanici.soyad }}" readonly>
+
+            </div>
+
+
+            <!-- GÖNDERİCİ TELEFON -->
+
+            <div class="form-group">
+
+                <label>
+                    Telefon
+                </label>
+
+                <input type="text" value="{{ kullanici.telefon or '' }}" readonly>
+
+            </div>
+
+
+            <!-- GÖNDERİCİ ADRES -->
+
+            <div class="form-group">
+
+                <label>
+                    Adres
+                </label>
+
+                <textarea rows="3" readonly>{{ kullanici.adres or '' }}</textarea>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- ALICI BİLGİLERİ -->
+            <!-- ================================================= -->
+
+            <h3 class="mt-4">
+                Alıcı Bilgileri
+            </h3>
+
+            <hr>
+
+
+            <!-- ALICI SEÇ -->
+
+            <div class="form-group">
+
+                <label for="alici_id">
+                    Alıcı
+                </label>
+
+                <select id="alici_id" name="alici_id" required>
+
+                    <option value="">
+                        Alıcı seçiniz
+                    </option>
+
+
+                    {% for musteri in musteriler %}
+
+                    {% if musteri.id != kullanici.id %}
+
+                    <option value="{{ musteri.id }}" data-ad="{{ musteri.ad }}" data-soyad="{{ musteri.soyad }}"
+                        data-telefon="{{ musteri.telefon or '' }}" data-adres="{{ musteri.adres or '' }}">
+
+                        {{ musteri.ad }}
+                        {{ musteri.soyad }}
+
+                    </option>
+
+                    {% endif %}
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- ALICI AD SOYAD -->
+
+            <div class="form-group">
+
+                <label for="alici">
+                    Alıcı Ad Soyad
+                </label>
+
+                <input type="text" id="alici" placeholder="Alıcı seçiniz" readonly>
+
+            </div>
+
+
+            <!-- ALICI TELEFON -->
+
+            <div class="form-group">
+
+                <label for="alici_telefon">
+                    Alıcı Telefon
+                </label>
+
+                <input type="text" id="alici_telefon" placeholder="Alıcı seçildiğinde otomatik gelir" readonly>
+
+            </div>
+
+
+            <!-- ALICI ADRES -->
+
+            <div class="form-group">
+
+                <label for="alici_adres">
+                    Alıcı Adres
+                </label>
+
+                <textarea id="alici_adres" rows="3" placeholder="Alıcı seçildiğinde otomatik gelir" readonly></textarea>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- KARGO BİLGİLERİ -->
+            <!-- ================================================= -->
+
+            <h3 class="mt-4">
+                Kargo Bilgileri
+            </h3>
+
+            <hr>
+
+
+            <!-- ================================================= -->
+            <!-- GÖNDERİM ŞUBESİ -->
+            <!-- ================================================= -->
+
+            <div class="form-group">
+
+                <label for="sube_id">
+                    Gönderim Şubesi
+                </label>
+
+                {% if subeler %}
+
+                <select id="sube_id" name="sube_id" required>
+
+                    <option value="">
+                        Şube seçiniz
+                    </option>
+
+                    {% for sube in subeler %}
+
+                    <option value="{{ sube.id }}">
+
+                        {{ sube.sube_ad }} - {{ sube.il }} / {{ sube.ilce }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+                <small style="
+                    display:block;
+                    margin-top:6px;
+                    color:#6b7280;
+                ">
+                    Yalnızca profil adresinizin bulunduğu şehirdeki
+                    aktif şubeler gösterilmektedir.
+                </small>
+
+                {% else %}
+
+                <input type="text" value="Profil adresinizin bulunduğu şehirde aktif şube bulunamadı" readonly>
+
+                <small style="
+                    display:block;
+                    margin-top:6px;
+                    color:#dc2626;
+                ">
+                    Adres bilginizi kontrol ediniz. Adresinizde şehir adı
+                    bulunmuyorsa profilinizi güncelleyiniz.
+                </small>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- KARGO TÜRÜ -->
+            <!-- ================================================= -->
+
+            <div class="form-group">
+
+                <label for="kargo_turu_id">
+                    Kargo Türü
+                </label>
+
+                <select id="kargo_turu_id" name="kargo_turu_id" required>
+
+                    <option value="">
+                        Kargo türünü seçiniz
+                    </option>
+
+
+                    {% for tur in kargo_turleri %}
+
+                    <option value="{{ tur.id }}" data-ek-ucret="{{ tur.ek_ucret or 0 }}">
+
+                        {{ tur.ad }}
+
+                        {% if tur.ek_ucret and tur.ek_ucret > 0 %}
+
+                        (+{{ tur.ek_ucret }} ₺)
+
+                        {% else %}
+
+                        (Ek ücret yok)
+
+                        {% endif %}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <small style="
+                    display:block;
+                    margin-top:6px;
+                    color:#6b7280;
+                ">
+
+                    Standart gönderilerde ek ücret yoktur.
+                    Hızlı ve Ekspress gönderilerde ek ücret uygulanır.
+
+                </small>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- AĞIRLIK -->
+            <!-- ================================================= -->
+
+            <div class="form-group">
+
+                <label for="agirlik">
+                    Ağırlık (kg)
+                </label>
+
+                <input type="number" id="agirlik" name="agirlik" step="0.01" min="0.01" placeholder="Örneğin: 2.50"
+                    required>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- DESİ -->
+            <!-- ================================================= -->
+
+            <div class="form-group">
+
+                <label for="desi_en">
+                    En (cm)
+                </label>
+
+                <input type="number" id="desi_en" name="desi_en" step="0.01" min="0.01" placeholder="Örneğin: 30"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="desi_boy">
+                    Boy (cm)
+                </label>
+
+                <input type="number" id="desi_boy" name="desi_boy" step="0.01" min="0.01" placeholder="Örneğin: 40"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="desi_yukseklik">
+                    Yükseklik (cm)
+                </label>
+
+                <input type="number" id="desi_yukseklik" name="desi_yukseklik" step="0.01" min="0.01"
+                    placeholder="Örneğin: 20" required>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- HESAPLANAN DESİ -->
+            <!-- ================================================= -->
+
+            <div class="form-group">
+
+                <label for="hesaplanan_desi">
+                    Hesaplanan Desi
+                </label>
+
+                <input type="text" id="hesaplanan_desi" value="Ölçüler girildiğinde hesaplanır" readonly>
+
+                <small style="
+                    display:block;
+                    margin-top:6px;
+                    color:#6b7280;
+                ">
+
+                    Desi = En × Boy × Yükseklik / 3000
+
+                </small>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- ÜCRETE ESAS DEĞER -->
+            <!-- ================================================= -->
+
+            <div class="form-group">
+
+                <label for="ucretlendirme_degeri">
+                    Ücrete Esas Değer
+                </label>
+
+                <input type="text" id="ucretlendirme_degeri" value="Bilgiler girildiğinde hesaplanır" readonly>
+
+                <small style="
+                    display:block;
+                    margin-top:6px;
+                    color:#6b7280;
+                ">
+
+                    Ağırlık ve desi değerlerinden yüksek olan
+                    ücretlendirmede dikkate alınır.
+
+                </small>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- TEMEL KARGO ÜCRETİ -->
+            <!-- ================================================= -->
+
+            <div class="form-group">
+
+                <label for="temel_ucret_goster">
+                    Temel Kargo Ücreti
+                </label>
+
+                <input type="text" id="temel_ucret_goster" value="Bilgiler girildiğinde hesaplanır" readonly>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- KARGO TÜRÜ EK ÜCRETİ -->
+            <!-- ================================================= -->
+
+            <div class="form-group">
+
+                <label for="ek_ucret_goster">
+                    Kargo Türü Ek Ücreti
+                </label>
+
+                <input type="text" id="ek_ucret_goster" value="Kargo türü seçiniz" readonly>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- TOPLAM KARGO ÜCRETİ -->
+            <!-- ================================================= -->
+
+            <div class="form-group">
+
+                <label for="ucret_goster">
+                    Toplam Kargo Ücreti
+                </label>
+
+                <input type="text" id="ucret_goster" value="Bilgiler girildiğinde hesaplanır" readonly>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- FİYAT BİLGİLENDİRME -->
+            <!-- ================================================= -->
+
+            <div style="
+                margin-top:20px;
+                padding:15px;
+                background:#eff6ff;
+                border-radius:8px;
+                color:#475569;
+                font-size:14px;
+                line-height:1.6;
+            ">
+
+                <strong>
+                    Ücretlendirme Bilgisi
+                </strong>
+
+                <br>
+
+                Ücretlendirmede ağırlık ve desi değerlerinden
+                yüksek olan kullanılır.
+
+                <br><br>
+
+                Kargo türüne ait ek ücret, temel gönderim ücretinin
+                üzerine eklenir.
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- BUTONLAR -->
+            <!-- ================================================= -->
+
+            <div class="mt-4" style="
+                    display:flex;
+                    gap:10px;
+                ">
+
+                <button type="submit" class="panel-button" {% if not subeler %}disabled{% endif %}>
+
+                    📦 Kargoyu Oluştur
+
+                </button>
+
+
+                <a href="{{ url_for('main.kargolarim') }}" class="panel-button">
+
+                    Vazgeç
+
+                </a>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================================================= -->
+
+<script>
+
+
+    /* =========================================================
+       ALICI ELEMENTLERİ
+       ========================================================= */
+
+    const aliciSelect =
+        document.getElementById("alici_id");
+
+    const aliciInput =
+        document.getElementById("alici");
+
+    const aliciTelefon =
+        document.getElementById("alici_telefon");
+
+    const aliciAdres =
+        document.getElementById("alici_adres");
+
+
+    /* =========================================================
+       ALICI SEÇİLDİĞİNDE
+       ========================================================= */
+
+    aliciSelect.addEventListener(
+        "change",
+        function () {
+
+            const secilen =
+                this.options[this.selectedIndex];
+
+
+            if (!this.value) {
+
+                aliciInput.value = "";
+
+                aliciTelefon.value = "";
+
+                aliciAdres.value = "";
+
+                return;
+
+            }
+
+
+            const ad =
+                secilen.dataset.ad || "";
+
+            const soyad =
+                secilen.dataset.soyad || "";
+
+            const telefon =
+                secilen.dataset.telefon || "";
+
+            const adres =
+                secilen.dataset.adres || "";
+
+
+            aliciInput.value =
+                `${ad} ${soyad}`.trim();
+
+            aliciTelefon.value =
+                telefon;
+
+            aliciAdres.value =
+                adres;
+
+        }
+    );
+
+
+    /* =========================================================
+       ÜCRET ELEMENTLERİ
+       ========================================================= */
+
+    const kargoTuruSelect =
+        document.getElementById("kargo_turu_id");
+
+    const agirlikInput =
+        document.getElementById("agirlik");
+
+    const desiEn =
+        document.getElementById("desi_en");
+
+    const desiBoy =
+        document.getElementById("desi_boy");
+
+    const desiYukseklik =
+        document.getElementById("desi_yukseklik");
+
+    const hesaplananDesi =
+        document.getElementById("hesaplanan_desi");
+
+    const ucretlendirmeDegeri =
+        document.getElementById("ucretlendirme_degeri");
+
+    const temelUcretGoster =
+        document.getElementById("temel_ucret_goster");
+
+    const ekUcretGoster =
+        document.getElementById("ek_ucret_goster");
+
+    const ucretGoster =
+        document.getElementById("ucret_goster");
+
+
+    /* =========================================================
+       TEMEL ÜCRET HESAPLAMA
+       ========================================================= */
+
+    function temelUcretHesapla(
+        agirlik,
+        desi
+    ) {
+
+        const esasDeger =
+            Math.max(
+                agirlik,
+                desi
+            );
+
+
+        if (esasDeger <= 1) {
+
+            return 50;
+
+        }
+
+
+        if (esasDeger <= 3) {
+
+            return 75;
+
+        }
+
+
+        if (esasDeger <= 5) {
+
+            return 100;
+
+        }
+
+
+        const ekstra =
+            esasDeger - 5;
+
+
+        return (
+            100
+            + (ekstra * 20)
+        );
+
+    }
+
+
+    /* =========================================================
+       GENEL HESAPLAMA
+       ========================================================= */
+
+    function hesapla() {
+
+        const agirlik =
+            parseFloat(
+                agirlikInput.value
+            );
+
+        const en =
+            parseFloat(
+                desiEn.value
+            );
+
+        const boy =
+            parseFloat(
+                desiBoy.value
+            );
+
+        const yukseklik =
+            parseFloat(
+                desiYukseklik.value
+            );
+
+
+        /* =====================================================
+           DESİ
+           ===================================================== */
+
+        let desi = 0;
+
+
+        if (
+            !isNaN(en)
+            && !isNaN(boy)
+            && !isNaN(yukseklik)
+            && en > 0
+            && boy > 0
+            && yukseklik > 0
+        ) {
+
+            desi =
+                (
+                    en
+                    * boy
+                    * yukseklik
+                ) / 3000;
+
+
+            hesaplananDesi.value =
+                desi.toFixed(2)
+                + " desi";
+
+        }
+        else {
+
+            hesaplananDesi.value =
+                "Ölçüler girildiğinde hesaplanır";
+
+        }
+
+
+        /* =====================================================
+           AĞIRLIK KONTROLÜ
+           ===================================================== */
+
+        if (
+            isNaN(agirlik)
+            || agirlik <= 0
+        ) {
+
+            ucretlendirmeDegeri.value =
+                "Ağırlık giriniz";
+
+            temelUcretGoster.value =
+                "Ağırlık giriniz";
+
+            ucretGoster.value =
+                "Ağırlık giriniz";
+
+            return;
+
+        }
+
+
+        /* =====================================================
+           ÜCRETE ESAS DEĞER
+           ===================================================== */
+
+        const esasDeger =
+            Math.max(
+                agirlik,
+                desi
+            );
+
+
+        ucretlendirmeDegeri.value =
+            esasDeger.toFixed(2);
+
+
+        /* =====================================================
+           TEMEL ÜCRET
+           ===================================================== */
+
+        const temelUcret =
+            temelUcretHesapla(
+                agirlik,
+                desi
+            );
+
+
+        temelUcretGoster.value =
+            temelUcret.toFixed(2)
+            + " ₺";
+
+
+        /* =====================================================
+           KARGO TÜRÜ
+           ===================================================== */
+
+        if (!kargoTuruSelect.value) {
+
+            ekUcretGoster.value =
+                "Kargo türü seçiniz";
+
+            ucretGoster.value =
+                "Kargo türü seçiniz";
+
+            return;
+
+        }
+
+
+        const secilenTur =
+            kargoTuruSelect.options[
+            kargoTuruSelect.selectedIndex
+            ];
+
+
+        const ekUcret =
+            parseFloat(
+                secilenTur.dataset.ekUcret || 0
+            );
+
+
+        ekUcretGoster.value =
+            ekUcret.toFixed(2)
+            + " ₺";
+
+
+        /* =====================================================
+           TOPLAM ÜCRET
+           ===================================================== */
+
+        const toplamUcret =
+            temelUcret
+            + ekUcret;
+
+
+        ucretGoster.value =
+            toplamUcret.toFixed(2)
+            + " ₺";
+
+    }
+
+
+    /* =========================================================
+       EVENTLER
+       ========================================================= */
+
+    kargoTuruSelect.addEventListener(
+        "change",
+        hesapla
+    );
+
+
+    agirlikInput.addEventListener(
+        "input",
+        hesapla
+    );
+
+
+    desiEn.addEventListener(
+        "input",
+        hesapla
+    );
+
+
+    desiBoy.addEventListener(
+        "input",
+        hesapla
+    );
+
+
+    desiYukseklik.addEventListener(
+        "input",
+        hesapla
+    );
+
+
+</script>
+
+
+{% endblock %}

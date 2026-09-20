@@ -1,0 +1,985 @@
+/* =========================
+   GENEL
+   ========================= */
+
+.container {
+    padding: 20px 40px;
+    margin-top: 70px;
+}
+
+.container h1 {
+    margin-bottom: 15px;
+}
+
+.container p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   ANA SAYFA LOGIN TİPLERİ
+   ========================= */
+
+.login-types {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 20px;
+    margin-top: 25px;
+    padding: 5px;
+    flex-wrap: wrap;
+}
+
+.login-card {
+    width: 250px;
+    min-height: 270px;
+    padding: 30px;
+    text-align: center;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.login-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.login-card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.login-card p {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+
+/* =========================
+   ANA SAYFA BUTONLARI
+   ========================= */
+
+.login-button {
+    display: inline-block;
+    padding: 10px 18px;
+
+    background-color: #2563eb;
+    color: white;
+
+    text-decoration: none;
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.login-button:hover {
+    background-color: #1d4ed8;
+    color: white;
+    text-decoration: none;
+}
+
+
+/* =========================
+   ÖZELLİKLER
+   ========================= */
+
+.features {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    gap: 35px;
+
+    margin-top: 60px;
+    padding: 10px;
+
+    flex-wrap: wrap;
+}
+
+.feature-card {
+    width: 180px;
+
+    padding: 10px;
+
+    text-align: center;
+
+    background-color: transparent;
+
+    box-shadow: none;
+
+    border-radius: 0;
+}
+
+
+/* =========================
+   ÖZELLİK İKONLARI
+   ========================= */
+
+.feature-icon {
+    margin-bottom: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feature-icon iconify-icon {
+    font-size: 42px;
+
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Kare arka plan */
+    background-color: #f1f1f1;
+
+    /* Siyah ikon */
+    color: #111111;
+
+    border-radius: 12px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   ÖZELLİK BAŞLIKLARI
+   ========================= */
+
+.feature-card h3 {
+    font-size: 17px;
+
+    margin-bottom: 6px;
+
+    color: #1f2937;
+}
+
+
+/* =========================
+   ÖZELLİK AÇIKLAMALARI
+   ========================= */
+
+.feature-card p {
+    font-size: 13px;
+
+    color: #666;
+
+    line-height: 1.4;
+
+    margin: 0;
+}
+
+/* =========================================
+   FİYAT HESAPLAMA
+   ========================================= */
+
+.fiyat-hesapla-container {
+    width: 100%;
+    max-width: 1050px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.fiyat-hesapla-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.fiyat-hesapla-baslik {
+    text-align: left;
+    margin-bottom: 35px;
+}
+
+.fiyat-hesapla-baslik h1 {
+    margin: 0 0 10px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #222;
+}
+
+.fiyat-hesapla-baslik p {
+    margin: 0;
+    color: #777;
+    font-size: 15px;
+}
+
+
+/* Ölçü başlıkları */
+
+.olcu-baslik {
+    margin-bottom: 20px;
+}
+
+.olcu-baslik h3 {
+    margin: 0 0 6px;
+    font-size: 19px;
+    color: #222;
+}
+
+.olcu-baslik span {
+    font-size: 14px;
+    color: #777;
+}
+
+
+/* Ölçü alanları */
+
+.olcu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.fiyat-input-grup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fiyat-input-grup label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.input-birim {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-birim input {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #d7d7d7;
+    border-radius: 8px;
+    padding: 0 55px 0 14px;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+    transition: 0.2s;
+}
+
+.input-birim input:focus {
+    border-color: #555;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+.input-birim span {
+    position: absolute;
+    right: 14px;
+    color: #777;
+    font-size: 14px;
+}
+
+
+/* Ağırlık */
+
+.agirlik-alani {
+    margin-top: 35px;
+}
+
+.agirlik-input {
+    max-width: 320px;
+}
+
+
+/* Hesapla butonu */
+
+.fiyat-hesapla-btn {
+    width: 100%;
+    height: 50px;
+    margin-top: 35px;
+    border: none;
+    border-radius: 8px;
+    background: #222;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.fiyat-hesapla-btn:hover {
+    background: #333;
+}
+
+
+/* Sonuç */
+
+.fiyat-sonuc {
+    margin-top: 40px;
+    padding-top: 35px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.sonuc-baslik {
+    margin-bottom: 20px;
+}
+
+.sonuc-baslik h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #222;
+}
+
+.sonuc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.sonuc-item {
+    padding: 20px;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sonuc-item span {
+    font-size: 13px;
+    color: #777;
+}
+
+.sonuc-item strong {
+    font-size: 18px;
+    color: #222;
+}
+
+
+/* Fiyat */
+
+.tahmini-fiyat {
+    margin-top: 20px;
+    padding: 25px;
+    border-radius: 10px;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tahmini-fiyat span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.tahmini-fiyat strong {
+    font-size: 26px;
+    color: #222;
+}
+
+.fiyat-not {
+    margin: 15px 0 0;
+    font-size: 12px;
+    color: #888;
+}
+
+
+/* Mobil */
+
+@media (max-width: 768px) {
+
+    .fiyat-hesapla-container {
+        margin: 20px auto;
+        padding: 10px;
+    }
+
+    .fiyat-hesapla-card {
+        padding: 25px;
+    }
+
+    .olcu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .agirlik-input {
+        max-width: 100%;
+    }
+
+    .sonuc-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tahmini-fiyat {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+}
+
+/* =========================
+   ANA SAYFA BAŞLIK
+   ========================= */
+
+.ana-sayfa-baslik {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+
+    padding: 100px 40px 20px 40px;
+    margin: 0;
+}
+
+.ana-sayfa-baslik h1 {
+    margin: 0 0 15px 0;
+    font-size: 32px;
+}
+
+.ana-sayfa-baslik p {
+    margin: 0;
+    font-size: 18px;
+}
+
+/* =========================================================
+   BİLDİRİMLER
+   ========================================================= */
+
+.bildirimler-page {
+    width: 100%;
+    padding: 45px 30px 60px;
+    box-sizing: border-box;
+}
+
+.bildirimler-card {
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px;
+    box-sizing: border-box;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.bildirimler-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.bildirim-baslik-alani h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.bildirim-baslik-alani p {
+    margin: 8px 0 0;
+    color: #777777;
+    font-size: 14px;
+}
+
+.bildirim-sayi {
+    padding: 8px 14px;
+    border-radius: 20px;
+    background: #f1f1f1;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+
+/* BİLDİRİM LİSTESİ */
+
+.bildirimler-listesi {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.bildirim-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 20px;
+    border: 1px solid #eeeeee;
+    border-radius: 14px;
+    background: #ffffff;
+    transition: 0.2s ease;
+}
+
+.bildirim-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+}
+
+.bildirim-item.okunmamis {
+    border-left: 4px solid #222222;
+    background: #fafafa;
+}
+
+
+/* BİLDİRİM İKONU */
+
+.bildirim-icon {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #f1f1f1;
+    font-size: 23px;
+}
+
+
+/* İÇERİK */
+
+.bildirim-icerik {
+    flex: 1;
+    min-width: 0;
+}
+
+.bildirim-ust {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bildirim-ust h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.bildirim-icerik p {
+    margin: 8px 0 14px;
+    color: #666666;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* YENİ ETİKETİ */
+
+.yeni-bildirim {
+    padding: 4px 8px;
+    border-radius: 10px;
+    background: #eeeeee;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* ALT KISIM */
+
+.bildirim-alt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.bildirim-alt small {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #888888;
+    font-size: 12px;
+}
+
+
+/* OKUNDU BUTONU */
+
+.bildirim-alt form {
+    margin: 0;
+}
+
+.bildirim-alt button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    background: #116dcf;
+    color: #ffffff;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.bildirim-alt button:hover {
+    opacity: 0.8;
+}
+
+
+/* OKUNDU */
+
+.bildirim-okundu {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #777777;
+    font-size: 12px;
+}
+
+
+/* BİLDİRİM YOK */
+
+.bildirim-yok {
+    text-align: center;
+    padding: 60px 20px;
+    color: #777777;
+}
+
+.bildirim-yok iconify-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.bildirim-yok h3 {
+    margin: 0 0 8px;
+    color: #333333;
+}
+
+.bildirim-yok p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* =========================================================
+   FİYAT HESAPLAMA - SADE TASARIM
+   ========================================================= */
+
+.fiyat-hesapla-page {
+    width: 90%;
+    max-width: 1050px;
+
+    margin: 0 auto 60px auto;
+
+    padding-top: 110px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   BAŞLIK
+   ========================= */
+
+.fiyat-simple-header {
+    margin-bottom: 25px;
+}
+
+
+.fiyat-simple-header h1 {
+    margin: 0 0 7px;
+
+    color: #1f2937;
+
+    font-size: 28px;
+    font-weight: 600;
+}
+
+
+.fiyat-simple-header p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   ANA KART
+   ========================= */
+
+.fiyat-simple-card {
+    display: grid;
+
+    grid-template-columns: 1.1fr 0.9fr;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================
+   SOL / SAĞ
+   ========================= */
+
+.fiyat-form-alani {
+    padding: 30px;
+}
+
+
+.fiyat-sonuc-alani {
+    padding: 30px;
+
+    background: #fafafa;
+
+    border-left: 1px solid #e5e7eb;
+}
+
+
+/* =========================
+   BAŞLIKLAR
+   ========================= */
+
+.fiyat-form-alani h3,
+.fiyat-sonuc-alani h3 {
+    margin: 0;
+
+    color: #1f2937;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+.fiyat-form-alani hr,
+.fiyat-sonuc-alani hr {
+    margin: 12px 0 24px;
+
+    border: 0;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+.fiyat-alt-baslik {
+    margin: 25px 0 13px;
+
+    color: #374151;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =========================
+   FORM
+   ========================= */
+
+.fiyat-hesapla-page .form-group {
+    margin-bottom: 18px;
+}
+
+
+.fiyat-hesapla-page .form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #374151;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+.fiyat-hesapla-page input,
+.fiyat-hesapla-page select {
+    width: 100%;
+    height: 44px;
+
+    padding: 0 12px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 6px;
+
+    background: white;
+
+    color: #1f2937;
+
+    font-family: inherit;
+    font-size: 14px;
+}
+
+
+.fiyat-hesapla-page input:focus,
+.fiyat-hesapla-page select:focus {
+    outline: none;
+
+    border-color: #3b82f6;
+}
+
+
+/* =========================
+   ÖLÇÜLER
+   ========================= */
+
+.fiyat-olcu-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+
+.fiyat-desi-aciklama {
+    display: block;
+
+    margin-top: -5px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   SONUÇ
+   ========================= */
+
+.fiyat-sonuc-satir {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.fiyat-sonuc-satir span {
+    color: #4b5563;
+
+    font-size: 13px;
+}
+
+
+.fiyat-sonuc-satir strong {
+    color: #1f2937;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   TOPLAM
+   ========================= */
+
+.fiyat-toplam {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 24px;
+
+    padding: 16px;
+
+    border: 1px solid #bfdbfe;
+
+    border-radius: 7px;
+
+    background: #eff6ff;
+}
+
+
+.fiyat-toplam span {
+    color: #374151;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.fiyat-toplam strong {
+    color: #2563eb;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   NOT
+   ========================= */
+
+.fiyat-not {
+    margin: 18px 0 0;
+
+    color: #6b7280;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 800px) {
+
+    .fiyat-simple-card {
+        grid-template-columns: 1fr;
+    }
+
+
+    .fiyat-sonuc-alani {
+        border-top: 1px solid #e5e7eb;
+
+        border-left: none;
+    }
+
+}
+
+
+@media (max-width: 576px) {
+
+    .fiyat-hesapla-page {
+        width: 92%;
+
+        padding-top: 90px;
+    }
+
+
+    .fiyat-simple-header h1 {
+        font-size: 24px;
+    }
+
+
+    .fiyat-form-alani,
+    .fiyat-sonuc-alani {
+        padding: 22px 18px;
+    }
+
+
+    .fiyat-olcu-grid {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+
+}

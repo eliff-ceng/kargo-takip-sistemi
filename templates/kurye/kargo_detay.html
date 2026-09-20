@@ -1,0 +1,634 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kargo Detayı
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 pt-4">
+
+    <!-- =====================================================
+         SAYFA BAŞLIĞI
+         ===================================================== -->
+
+    <div class="mb-4">
+
+        <a href="{{ url_for('main.kurye_kargolarim') }}" class="btn btn-secondary mb-3">
+
+            <iconify-icon icon="mdi:arrow-left"></iconify-icon>
+
+            Kargolarıma Dön
+
+        </a>
+
+        <h1 class="mb-2">
+
+            <iconify-icon icon="mdi:package-variant-closed" style="font-size: 35px;">
+            </iconify-icon>
+
+            Kargo Detayı
+
+        </h1>
+
+        <p class="text-muted">
+
+            Takip No:
+
+            <strong>
+                {{ kargo.takip_no }}
+            </strong>
+
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         FLASH MESAJLARI
+         ===================================================== -->
+
+    {% with messages = get_flashed_messages() %}
+
+    {% if messages %}
+
+    {% for message in messages %}
+
+    <div class="alert alert-info">
+        {{ message }}
+    </div>
+
+    {% endfor %}
+
+    {% endif %}
+
+    {% endwith %}
+
+
+    <!-- =====================================================
+         GÖNDERİ BİLGİLERİ
+         ===================================================== -->
+
+    <div class="row mb-4">
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="card-title">
+
+                        <iconify-icon icon="mdi:account-multiple" style="font-size: 28px;">
+                        </iconify-icon>
+
+                        Gönderi Bilgileri
+
+                    </h4>
+
+                    <hr>
+
+                    <p>
+                        <strong>Takip No:</strong>
+                        {{ kargo.takip_no }}
+                    </p>
+
+                    <p>
+                        <strong>Gönderici:</strong>
+                        {{ kargo.gonderici }}
+                    </p>
+
+                    <p>
+                        <strong>Gönderici Telefon:</strong>
+                        {{ kargo.gonderici_telefon }}
+                    </p>
+
+                    <p>
+                        <strong>Gönderici Adres:</strong>
+                        {{ kargo.gonderici_adres }}
+                    </p>
+
+                    <p>
+                        <strong>Alıcı:</strong>
+                        {{ kargo.alici }}
+                    </p>
+
+                    <p>
+                        <strong>Alıcı Telefon:</strong>
+                        {{ kargo.alici_telefon }}
+                    </p>
+
+                    <p>
+                        <strong>Alıcı Adres:</strong>
+                        {{ kargo.alici_adres }}
+                    </p>
+
+                    <p>
+                        <strong>Ağırlık:</strong>
+                        {{ kargo.agirlik }}
+                    </p>
+
+                    <p>
+                        <strong>Ücret:</strong>
+                        {{ kargo.ucret }}
+                    </p>
+
+                    <p>
+                        <strong>Gönderim Tarihi:</strong>
+
+                        {% if kargo.gonderim_tarihi %}
+
+                        {{ kargo.gonderim_tarihi.strftime("%d.%m.%Y %H:%M") }}
+
+                        {% else %}
+
+                        -
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             KARGO DURUMU
+             ================================================= -->
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="card-title">
+
+                        <iconify-icon icon="mdi:information-outline" style="font-size: 28px;">
+                        </iconify-icon>
+
+                        Kargo Durumu
+
+                    </h4>
+
+                    <hr>
+
+
+                    <p>
+
+                        <strong>Mevcut Durum:</strong>
+
+                        {% if kargo.durum == "Teslim Edildi" %}
+
+                        <span class="badge badge-success">
+                            {{ kargo.durum }}
+                        </span>
+
+                        {% elif kargo.durum == "Dağıtımda" %}
+
+                        <span class="badge badge-warning">
+                            {{ kargo.durum }}
+                        </span>
+
+                        {% elif kargo.durum == "Şubede" %}
+
+                        <span class="badge badge-info">
+                            {{ kargo.durum }}
+                        </span>
+
+                        {% elif kargo.durum == "İptal Edildi" %}
+
+                        <span class="badge badge-danger">
+                            {{ kargo.durum }}
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge badge-secondary">
+                            {{ kargo.durum }}
+                        </span>
+
+                        {% endif %}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>Kurye:</strong>
+
+                        {% if kargo.kurye %}
+
+                        <iconify-icon icon="fa6-solid:truck">
+                        </iconify-icon>
+
+                        {{ kargo.kurye.kullanici.ad }}
+                        {{ kargo.kurye.kullanici.soyad }}
+
+                        {% else %}
+
+                        <span class="text-muted">
+                            Kurye Atanmadı
+                        </span>
+
+                        {% endif %}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>Şube:</strong>
+
+                        {{ sube.sube_ad }}
+
+                    </p>
+
+
+                    {% if kargo.teslim_tarihi %}
+
+                    <p>
+
+                        <strong>Teslim Tarihi:</strong>
+
+                        {{ kargo.teslim_tarihi.strftime("%d.%m.%Y %H:%M") }}
+
+                    </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         KURYE İŞLEMLERİ
+         ===================================================== -->
+
+    <div class="row mb-4">
+
+        <div class="col-md-12">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="card-title">
+
+                        <iconify-icon icon="fa6-solid:truck" style="font-size: 28px;">
+                        </iconify-icon>
+
+                        Kargo İşlemleri
+
+                    </h4>
+
+                    <hr>
+
+
+                    <!-- =========================================
+                         ŞUBEDE
+                         ========================================= -->
+
+                    {% if kargo.durum == "Şubede" %}
+
+                    <form method="POST" action="{{ url_for(
+                                  'main.kurye_teslimata_cikar',
+                                  kargo_id=kargo.id
+                              ) }}" class="d-inline">
+
+                        <button type="submit" class="btn btn-warning">
+
+                            <iconify-icon icon="fa6-solid:truck">
+                            </iconify-icon>
+
+                            Teslimata Çıkar
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- =========================================
+                         DAĞITIMDA
+                         ========================================= -->
+
+                    {% elif kargo.durum == "Dağıtımda" %}
+
+                    <form method="POST" action="{{ url_for(
+                                  'main.kurye_teslim_edildi',
+                                  kargo_id=kargo.id
+                              ) }}" class="d-inline">
+
+                        <button type="submit" class="btn btn-success">
+
+                            <iconify-icon icon="mdi:check-circle">
+                            </iconify-icon>
+
+                            Teslim Edildi
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- =========================================
+                         TESLİM EDİLDİ
+                         ========================================= -->
+
+                    {% elif kargo.durum == "Teslim Edildi" %}
+
+                    <div class="alert alert-success mb-0">
+
+                        <iconify-icon icon="mdi:check-circle" style="font-size: 20px;">
+                        </iconify-icon>
+
+                        Bu kargo teslim edilmiştir.
+
+                    </div>
+
+
+                    <!-- =========================================
+                         İPTAL EDİLDİ
+                         ========================================= -->
+
+                    {% elif kargo.durum == "İptal Edildi" %}
+
+                    <div class="alert alert-danger mb-0">
+
+                        <iconify-icon icon="mdi:close-circle" style="font-size: 20px;">
+                        </iconify-icon>
+
+                        Bu kargo iptal edilmiştir.
+
+                    </div>
+
+
+                    <!-- =========================================
+                         HAZIRLANIYOR
+                         ========================================= -->
+
+                    {% elif kargo.durum == "Hazırlanıyor" %}
+
+                    <div class="alert alert-secondary mb-0">
+
+                        <iconify-icon icon="mdi:package-clock" style="font-size: 20px;">
+                        </iconify-icon>
+
+                        Bu kargo henüz hazırlanıyor.
+                        Kargo şubede hazır olduğunda
+                        teslimata çıkarabilirsiniz.
+
+                    </div>
+
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ŞUBE BİLGİLERİ
+         ===================================================== -->
+
+    <div class="card mb-4 shadow-sm">
+
+        <div class="card-body">
+
+            <h4 class="card-title">
+
+                <iconify-icon icon="mdi:office-building" style="font-size: 28px;">
+                </iconify-icon>
+
+                Şube Bilgileri
+
+            </h4>
+
+            <hr>
+
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <p>
+
+                        <strong>Şube:</strong>
+
+                        {{ sube.sube_ad }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>İl:</strong>
+
+                        {{ sube.il }}
+
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <p>
+
+                        <strong>İlçe:</strong>
+
+                        {{ sube.ilce }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Telefon:</strong>
+
+                        {{ sube.telefon }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <p>
+
+                <strong>Adres:</strong>
+
+                {{ sube.adres }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         KARGO HAREKETLERİ
+         ===================================================== -->
+
+    <div class="card mb-5 shadow-sm">
+
+        <div class="card-body">
+
+            <h3 class="mb-4">
+
+                <iconify-icon icon="mdi:timeline-clock" style="font-size: 30px;">
+                </iconify-icon>
+
+                Kargo Hareketleri
+
+            </h3>
+
+
+            {% if hareketler %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Tarih
+                            </th>
+
+                            <th>
+                                Durum
+                            </th>
+
+                            <th>
+                                Açıklama
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for hareket in hareketler %}
+
+                        <tr>
+
+                            <td>
+
+                                {% if hareket.tarih %}
+
+                                {{ hareket.tarih.strftime("%d.%m.%Y %H:%M") }}
+
+                                {% else %}
+
+                                -
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if hareket.durum == "Teslim Edildi" %}
+
+                                <span class="badge badge-success">
+                                    {{ hareket.durum }}
+                                </span>
+
+                                {% elif hareket.durum == "Dağıtımda" %}
+
+                                <span class="badge badge-warning">
+                                    {{ hareket.durum }}
+                                </span>
+
+                                {% elif hareket.durum == "Şubede" %}
+
+                                <span class="badge badge-info">
+                                    {{ hareket.durum }}
+                                </span>
+
+                                {% elif hareket.durum == "İptal Edildi" %}
+
+                                <span class="badge badge-danger">
+                                    {{ hareket.durum }}
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge badge-secondary">
+                                    {{ hareket.durum }}
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if hareket.aciklama %}
+
+                                {{ hareket.aciklama }}
+
+                                {% else %}
+
+                                <span class="text-muted">
+                                    Açıklama bulunmuyor.
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="text-center p-4">
+
+                <iconify-icon icon="mdi:timeline-remove" style="font-size: 50px;">
+                </iconify-icon>
+
+                <p class="mt-3 mb-0">
+
+                    Bu kargoya ait hareket kaydı bulunmamaktadır.
+
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

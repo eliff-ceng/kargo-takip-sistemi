@@ -1,0 +1,157 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Müşteri Kayıt
+{% endblock %}
+
+{% block content %}
+
+<div class="login-page">
+
+    <div class="login-box">
+
+        <iconify-icon icon="fa-solid:user-plus"></iconify-icon>
+
+        <h1>
+            Müşteri Kayıt
+        </h1>
+
+        <p class="text-muted">
+            Yeni müşteri hesabınızı oluşturun.
+        </p>
+
+
+        <form method="POST">
+
+            <!-- AD -->
+
+            <div class="form-group">
+
+                <label>
+                    Ad
+                </label>
+
+                <input type="text" name="ad" placeholder="Adınızı girin" required>
+
+            </div>
+
+
+            <!-- SOYAD -->
+
+            <div class="form-group">
+
+                <label>
+                    Soyad
+                </label>
+
+                <input type="text" name="soyad" placeholder="Soyadınızı girin" required>
+
+            </div>
+
+
+            <!-- KULLANICI ADI -->
+
+            <div class="form-group">
+
+                <label>
+                    Kullanıcı Adı
+                </label>
+
+                <input type="text" name="kullanici_adi" placeholder="Kullanıcı adı belirleyin" required>
+
+            </div>
+
+
+            <!-- E-POSTA -->
+
+            <div class="form-group">
+
+                <label>
+                    E-posta
+                </label>
+
+                <input type="email" name="email" placeholder="E-posta adresinizi girin" required>
+
+            </div>
+
+
+            <!-- TELEFON -->
+
+            <div class="form-group">
+
+                <label>
+                    Telefon
+                </label>
+
+                <input type="text" name="telefon" placeholder="Telefon numaranız">
+
+            </div>
+
+
+            <!-- ADRES -->
+
+            <div class="form-group">
+
+                <label>
+                    Adres
+                </label>
+
+                <textarea name="adres" rows="3" placeholder="Adresiniz"></textarea>
+
+            </div>
+
+
+            <!-- ŞİFRE -->
+
+            <div class="form-group">
+
+                <label>
+                    Şifre
+                </label>
+
+                <input type="password" name="sifre" placeholder="Şifrenizi belirleyin" required>
+
+            </div>
+
+
+            <!-- ŞİFRE TEKRAR -->
+
+            <div class="form-group">
+
+                <label>
+                    Şifre Tekrar
+                </label>
+
+                <input type="password" name="sifre_tekrar" placeholder="Şifrenizi tekrar girin" required>
+
+            </div>
+
+
+            <!-- KAYIT -->
+
+            <button type="submit" class="btn btn-primary">
+                Kayıt Ol
+            </button>
+
+        </form>
+
+
+        <!-- GİRİŞE DÖN -->
+
+        <div class="login-register">
+
+            <span>
+                Zaten hesabınız var mı?
+            </span>
+
+            <a href="{{ url_for('main.musteri_login') }}">
+                Giriş Yap
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

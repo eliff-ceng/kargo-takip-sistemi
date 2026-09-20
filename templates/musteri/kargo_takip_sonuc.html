@@ -1,0 +1,333 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kargo Takip Sonucu
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 pt-4">
+
+    <!-- =========================
+         SAYFA BAŞLIĞI
+         ========================= -->
+
+    <div class="text-center mb-4">
+
+        <h1>
+            Kargo Takip
+        </h1>
+
+        <p class="text-muted">
+            Takip numaranızı girerek kargonuzun güncel durumunu
+            ve hareket geçmişini görüntüleyebilirsiniz.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         TAKİP FORMU
+         ========================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <form method="POST" action="{{ url_for('main.genel_kargo_takip') }}">
+
+                <div class="row align-items-end">
+
+                    <div class="col-md-10">
+
+                        <label for="takip_no" class="form-label fw-semibold">
+                            Takip Numarası
+                        </label>
+
+                        <input type="text" id="takip_no" name="takip_no" class="form-control"
+                            value="{{ takip_no or '' }}" placeholder="Örn. KRG123456" required>
+
+                    </div>
+
+
+                    <div class="col-md-2 mt-3 mt-md-0">
+
+                        <button type="submit" class="btn btn-primary w-100">
+
+                            <iconify-icon icon="ic:sharp-search"></iconify-icon>
+
+                            Takip Et
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    {% if kargo %}
+
+    <!-- =========================
+         KARGO BİLGİLERİ
+         ========================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header">
+
+            <h3 class="mb-0">
+                Kargo Bilgileri
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- TAKİP NUMARASI -->
+
+                <div class="col-md-4 mb-3">
+
+                    <strong>
+                        Takip Numarası
+                    </strong>
+
+                    <p class="mb-0">
+                        {{ kargo.takip_no }}
+                    </p>
+
+                </div>
+
+
+                <!-- GÖNDERİCİ -->
+
+                <div class="col-md-4 mb-3">
+
+                    <strong>
+                        Gönderici
+                    </strong>
+
+                    <p class="mb-0">
+                        {{ kargo.gonderici }}
+                    </p>
+
+                </div>
+
+
+                <!-- ALICI -->
+
+                <div class="col-md-4 mb-3">
+
+                    <strong>
+                        Alıcı
+                    </strong>
+
+                    <p class="mb-0">
+                        {{ kargo.alici }}
+                    </p>
+
+                </div>
+
+
+                <!-- AĞIRLIK -->
+
+                <div class="col-md-4 mb-3">
+
+                    <strong>
+                        Ağırlık
+                    </strong>
+
+                    <p class="mb-0">
+                        {{ kargo.agirlik }} kg
+                    </p>
+
+                </div>
+
+
+                <!-- ÜCRET -->
+
+                <div class="col-md-4 mb-3">
+
+                    <strong>
+                        Kargo Ücreti
+                    </strong>
+
+                    <p class="mb-0">
+                        {{ kargo.ucret }} ₺
+                    </p>
+
+                </div>
+
+
+                <!-- ŞUBE -->
+
+                <div class="col-md-4 mb-3">
+
+                    <strong>
+                        Şube
+                    </strong>
+
+                    <p class="mb-0">
+
+                        {% if kargo.sube %}
+
+                        {{ kargo.sube.sube_ad }}
+
+                        {% else %}
+
+                        Bilgi bulunamadı
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================
+                 DURUM
+                 ===================== -->
+
+            <div class="mt-3">
+
+                <strong>
+                    Güncel Durum
+                </strong>
+
+                <div class="mt-2">
+
+                    {% if kargo.durum == "Teslim Edildi" %}
+
+                    <span class="badge bg-success p-2">
+                        {{ kargo.durum }}
+                    </span>
+
+                    {% elif kargo.durum == "İptal Edildi" %}
+
+                    <span class="badge bg-danger p-2">
+                        {{ kargo.durum }}
+                    </span>
+
+                    {% elif kargo.durum == "Dağıtımda" %}
+
+                    <span class="badge bg-warning text-dark p-2">
+                        {{ kargo.durum }}
+                    </span>
+
+                    {% else %}
+
+                    <span class="badge bg-primary p-2">
+                        {{ kargo.durum }}
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         KARGO HAREKETLERİ
+         ========================= -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h3 class="mb-0">
+                Kargo Hareketleri
+            </h3>
+
+        </div>
+
+
+        <div class="card-body">
+
+            {% if kargo_hareketleri %}
+
+            <div class="list-group">
+
+                {% for hareket in kargo_hareketleri %}
+
+                <div class="list-group-item">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+
+                            <strong>
+                                {{ hareket.durum }}
+                            </strong>
+
+                            <p class="mb-1 text-muted">
+                                {{ hareket.aciklama }}
+                            </p>
+
+                        </div>
+
+                        <small class="text-muted">
+
+                            {{ hareket.tarih.strftime("%d.%m.%Y %H:%M") }}
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <p class="text-muted mb-0">
+                Bu kargoya ait hareket kaydı bulunmamaktadır.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    {% elif takip_no %}
+
+    <!-- =========================
+         KARGO BULUNAMADI
+         ========================= -->
+
+    <div class="alert alert-warning">
+
+        <iconify-icon icon="mdi:alert-circle"></iconify-icon>
+
+        <strong>
+            Kargo bulunamadı.
+        </strong>
+
+        <div class="mt-1">
+            Girdiğiniz takip numarasına ait bir kargo kaydı bulunamadı.
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

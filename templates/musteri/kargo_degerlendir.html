@@ -1,0 +1,163 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kargo Değerlendirme
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+    <!-- ========================= -->
+    <!-- BAŞLIK -->
+    <!-- ========================= -->
+
+    <div class="panel-header">
+
+        <h1>
+            <iconify-icon icon="material-symbols:star-rounded"></iconify-icon>
+            Kargo Değerlendirme
+        </h1>
+
+        <p>
+            Teslimat deneyiminizi değerlendirin
+        </p>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- DEĞERLENDİRME KARTI -->
+    <!-- ========================= -->
+
+    <div class="panel-card degerlendirme-card">
+
+        <div class="panel-icon">
+
+            <iconify-icon icon="noto:package"></iconify-icon>
+
+        </div>
+
+
+        <!-- TAKİP NUMARASI -->
+
+        <h3>
+            {{ kargo.takip_no }}
+        </h3>
+
+        <hr>
+
+
+        <!-- KARGO BİLGİLERİ -->
+
+        <p>
+            <strong>Gönderici:</strong>
+            {{ kargo.gonderici }}
+        </p>
+
+        <p>
+            <strong>Alıcı:</strong>
+            {{ kargo.alici }}
+        </p>
+
+        {% if kargo.teslim_tarihi %}
+
+        <p>
+            <strong>Teslim Tarihi:</strong>
+            {{ kargo.teslim_tarihi.strftime('%d.%m.%Y %H:%M') }}
+        </p>
+
+        {% endif %}
+
+
+        <hr>
+
+
+        <!-- ========================= -->
+        <!-- DEĞERLENDİRME FORMU -->
+        <!-- ========================= -->
+
+        <form method="POST" action="{{ url_for('main.kargo_degerlendir', kargo_id=kargo.id) }}">
+
+            <!-- PUAN -->
+
+            <div class="form-group">
+
+                <label for="puan">
+                    <strong>Puanınız</strong>
+                </label>
+
+                <select name="puan" id="puan" class="form-control" required>
+
+                    <option value="">
+                        Puan seçiniz
+                    </option>
+
+                    <option value="5">
+                        ★★★★★ - Çok İyi
+                    </option>
+
+                    <option value="4">
+                        ★★★★☆ - İyi
+                    </option>
+
+                    <option value="3">
+                        ★★★☆☆ - Orta
+                    </option>
+
+                    <option value="2">
+                        ★★☆☆☆ - Kötü
+                    </option>
+
+                    <option value="1">
+                        ★☆☆☆☆ - Çok Kötü
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- YORUM -->
+
+            <div class="form-group">
+
+                <label for="yorum">
+                    <strong>Yorumunuz</strong>
+                </label>
+
+                <textarea name="yorum" id="yorum" class="form-control" rows="5" maxlength="500"
+                    placeholder="Teslimat hakkında düşüncelerinizi yazabilirsiniz..."></textarea>
+
+            </div>
+
+
+            <!-- BUTONLAR -->
+
+            <div class="degerlendirme-actions">
+
+                <button type="submit" class="panel-button">
+
+                    <iconify-icon icon="material-symbols:star-rounded"></iconify-icon>
+
+                    Değerlendirmeyi Gönder
+
+                </button>
+
+
+                <a href="{{ url_for('main.kargolarim') }}" class="panel-button">
+
+                    Kargolarıma Dön
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

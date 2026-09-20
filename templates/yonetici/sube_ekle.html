@@ -1,0 +1,140 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Yeni Şube Ekle
+{% endblock %}
+
+{% block content %}
+
+<div class="yonetici-dashboard">
+
+    <!-- =========================
+         BAŞLIK
+         ========================= -->
+
+    <div class="yonetici-header">
+
+        <div>
+
+            <h1>Yeni Şube Ekle</h1>
+
+            <p>
+                Sisteme yeni bir şube ekleyebilirsiniz.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ŞUBE FORMU
+         ========================= -->
+
+    <div class="yonetici-section">
+
+        <div class="yonetici-section-header">
+
+            <h2>Şube Bilgileri</h2>
+
+        </div>
+
+
+        <form method="POST" action="{{ url_for('main.yonetici_sube_ekle') }}">
+
+            <!-- ŞUBE ADI -->
+
+            <div class="yonetici-filter-group">
+
+                <label for="sube_ad">
+                    Şube Adı
+                </label>
+
+                <input type="text" id="sube_ad" name="sube_ad" value="{{ request.form.get('sube_ad', '') }}" required
+                    placeholder="Şube adı giriniz">
+
+            </div>
+
+
+            <!-- İL -->
+
+            <div class="yonetici-filter-group">
+
+                <label for="il">
+                    İl
+                </label>
+
+                <input type="text" id="il" name="il" value="{{ request.form.get('il', '') }}" required
+                    placeholder="İl giriniz">
+
+            </div>
+
+
+            <!-- İLÇE -->
+
+            <div class="yonetici-filter-group">
+
+                <label for="ilce">
+                    İlçe
+                </label>
+
+                <input type="text" id="ilce" name="ilce" value="{{ request.form.get('ilce', '') }}" required
+                    placeholder="İlçe giriniz">
+
+            </div>
+
+
+            <!-- ADRES -->
+
+            <div class="yonetici-filter-group">
+
+                <label for="adres">
+                    Adres
+                </label>
+
+                <textarea id="adres" name="adres" rows="3" required
+                    placeholder="Şube adresini giriniz">{{ request.form.get('adres', '') }}</textarea>
+
+            </div>
+
+
+            <!-- TELEFON -->
+
+            <div class="yonetici-filter-group">
+
+                <label for="telefon">
+                    Telefon
+                </label>
+
+                <input type="text" id="telefon" name="telefon" value="{{ request.form.get('telefon', '') }}" required
+                    placeholder="Telefon numarası giriniz">
+
+            </div>
+
+
+            <!-- BUTONLAR -->
+
+            <div class="yonetici-filter-buttons">
+
+                <button type="submit" class="yonetici-menu-button">
+
+                    Şubeyi Kaydet
+
+                </button>
+
+
+                <a href="{{ url_for('main.yonetici_subeler') }}" class="yonetici-menu-button">
+
+                    Vazgeç
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

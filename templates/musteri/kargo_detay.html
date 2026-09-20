@@ -1,0 +1,185 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kargo Detayı
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+
+    <!-- ========================= -->
+    <!-- BAŞLIK -->
+    <!-- ========================= -->
+
+    <div class="panel-header">
+
+        <h1>
+            <iconify-icon icon="noto:package"></iconify-icon>
+            Kargo Detayı
+        </h1>
+
+        <p>
+            Kargonuzun güncel durumu ve hareket geçmişi
+        </p>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- KARGO BİLGİLERİ -->
+    <!-- ========================= -->
+
+    <div class="panel-card">
+
+
+        <div class="kargo-takip-baslik">
+
+
+            <div>
+
+                <h3>
+                    {{ kargo.takip_no }}
+                </h3>
+
+                <p>
+                    <strong>
+                        Gönderici:
+                    </strong>
+
+                    {{ kargo.gonderici }}
+                </p>
+
+                <p>
+                    <strong>
+                        Alıcı:
+                    </strong>
+
+                    {{ kargo.alici }}
+                </p>
+
+                <p>
+                    <strong>
+                        Gönderim Tarihi:
+                    </strong>
+
+                    {{ kargo.gonderim_tarihi.strftime('%d.%m.%Y %H:%M') }}
+                </p>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- GÜNCEL DURUM -->
+            <!-- ========================= -->
+
+            <div class="kargo-durum">
+
+                <span>
+                    Güncel Durum
+                </span>
+
+                <strong>
+                    {{ kargo.durum }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <hr>
+
+
+        <!-- ========================= -->
+        <!-- KARGO HAREKETLERİ -->
+        <!-- ========================= -->
+
+        <h3>
+            Kargo Hareketleri
+        </h3>
+
+
+        {% if hareketler %}
+
+
+        <div class="takip-zaman-cizelgesi">
+
+
+            {% for hareket in hareketler %}
+
+
+            <div class="takip-adim">
+
+
+                <div class="takip-nokta">
+                    ✓
+                </div>
+
+
+                <div class="takip-bilgi">
+
+
+                    <h4>
+                        {{ hareket.durum }}
+                    </h4>
+
+
+                    <p>
+                        {{ hareket.aciklama }}
+                    </p>
+
+
+                    <small>
+
+                        {{ hareket.tarih.strftime(
+                        '%d.%m.%Y %H:%M'
+                        ) }}
+
+                    </small>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+        {% else %}
+
+
+        <p>
+            Bu kargoya ait henüz hareket kaydı bulunmamaktadır.
+        </p>
+
+
+        {% endif %}
+
+
+        <hr>
+
+
+        <!-- ========================= -->
+        <!-- GERİ DÖN -->
+        <!-- ========================= -->
+
+        <a href="{{ url_for('main.kargolarim') }}" class="panel-button">
+            ← Kargolarıma Dön
+        </a>
+
+
+    </div>
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,631 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Müşteri Değerlendirmeleri
+
+<script>
+
+    document
+        .querySelectorAll(".puan-bar-dolu")
+        .forEach(function (bar) {
+
+            let yuzde = parseFloat(
+                bar.dataset.yuzde || 0
+            );
+
+            if (yuzde < 0) {
+                yuzde = 0;
+            }
+
+            if (yuzde > 100) {
+                yuzde = 100;
+            }
+
+            bar.style.width =
+                yuzde + "%";
+
+        });
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container degerlendirme-page">
+
+    <div class="panel-header">
+        <h1>Müşteri Değerlendirmeleri</h1>
+        <p>
+            Müşteriler tarafından yapılan kargo değerlendirmelerini ve
+            memnuniyet sonuçlarını görüntüleyebilirsiniz.
+        </p>
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- ÖZET -->
+    <!-- ===================================================== -->
+
+    <div class="degerlendirme-ozet-grid">
+
+        <div class="degerlendirme-ozet-kutu">
+            <span>Ortalama Puan</span>
+            <strong>{{ ortalama_puan }} / 5</strong>
+        </div>
+
+        <div class="degerlendirme-ozet-kutu">
+            <span>Toplam Değerlendirme</span>
+            <strong>{{ toplam_degerlendirme }}</strong>
+        </div>
+
+        <div class="degerlendirme-ozet-kutu">
+            <span>Olumlu Değerlendirme</span>
+            <strong>%{{ olumlu_oran }}</strong>
+            <small>4 ve 5 yıldız</small>
+        </div>
+
+        <div class="degerlendirme-ozet-kutu">
+            <span>Yorum Sayısı</span>
+            <strong>{{ yorum_sayisi }}</strong>
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- PUAN DAĞILIMI -->
+    <!-- ===================================================== -->
+
+    <div class="panel-card degerlendirme-bolum">
+
+        <h3>Puan Dağılımı</h3>
+
+        <div class="puan-dagilimi">
+
+            {% for puan in [5, 4, 3, 2, 1] %}
+
+            <div class="puan-satir">
+
+                <div class="puan-etiket">
+                    {{ puan }} ★
+                </div>
+
+                <div class="puan-bar">
+                    <div class="puan-bar-dolu" data-yuzde="{{ puan_yuzdeleri.get(puan, 0) }}"></div>
+                </div>
+
+                <div class="puan-adet">
+                    {{ puan_dagilimi[puan] }}
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- FİLTRELER -->
+    <!-- ===================================================== -->
+
+    <div class="panel-card degerlendirme-bolum">
+
+        <form method="GET" class="degerlendirme-filtre">
+
+            <div class="form-group">
+                <label for="arama">Ara</label>
+                <input type="text" id="arama" name="arama" value="{{ arama }}"
+                    placeholder="Müşteri, takip no, şube veya yorum...">
+            </div>
+
+            <div class="form-group">
+                <label for="puan">Puan</label>
+                <select id="puan" name="puan">
+                    <option value="">Tüm puanlar</option>
+
+                    {% for puan in [5, 4, 3, 2, 1] %}
+                    <option value="{{ puan }}" {% if puan_filtresi==puan %}selected{% endif %}>
+                        {{ puan }} yıldız
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="degerlendirme-filtre-butonlar">
+                <button type="submit" class="panel-button">
+                    Filtrele
+                </button>
+
+                <a href="{{ url_for('main.yonetici_degerlendirmeler') }}" class="panel-button degerlendirme-temizle">
+                    Temizle
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- DEĞERLENDİRMELER -->
+    <!-- ===================================================== -->
+
+    <div class="panel-card degerlendirme-bolum">
+
+        <div class="degerlendirme-baslik-satiri">
+            <h3>Değerlendirmeler</h3>
+            <span>{{ degerlendirmeler|length }} kayıt gösteriliyor</span>
+        </div>
+
+        {% if degerlendirmeler %}
+
+        <div class="degerlendirme-liste">
+
+            {% for item in degerlendirmeler %}
+
+            <div class="degerlendirme-kayit">
+
+                <div class="degerlendirme-kayit-ust">
+
+                    <div>
+                        <strong>{{ item.musteri_adi }}</strong>
+
+                        <div class="degerlendirme-yildizlar">
+                            {% for i in range(1, 6) %}
+                            {% if i <= item.puan %} <span class="aktif-yildiz">★</span>
+                                {% else %}
+                                <span class="pasif-yildiz">★</span>
+                                {% endif %}
+                                {% endfor %}
+
+                                <b>{{ item.puan }}/5</b>
+                        </div>
+                    </div>
+
+                    <small>
+                        {% if item.tarih %}
+                        {{ item.tarih.strftime('%d.%m.%Y %H:%M') }}
+                        {% endif %}
+                    </small>
+
+                </div>
+
+
+                {% if item.yorum %}
+                <div class="degerlendirme-yorum">
+                    {{ item.yorum }}
+                </div>
+                {% else %}
+                <div class="degerlendirme-yorum yorum-yok">
+                    Yorum bırakılmadı.
+                </div>
+                {% endif %}
+
+
+                <div class="degerlendirme-detaylar">
+
+                    <span>
+                        <b>Takip No:</b>
+
+                        {% if item.kargo_id %}
+                        <a href="{{ url_for('main.yonetici_kargo_detay', kargo_id=item.kargo_id) }}">
+                            {{ item.takip_no }}
+                        </a>
+                        {% else %}
+                        {{ item.takip_no }}
+                        {% endif %}
+                    </span>
+
+                    <span>
+                        <b>Şube:</b>
+                        {{ item.sube_adi }}
+                    </span>
+
+                    <span>
+                        <b>Kurye:</b>
+                        {{ item.kurye_adi }}
+                    </span>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="degerlendirme-bos">
+            Bu filtrelere uygun değerlendirme bulunamadı.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- ŞUBE / KURYE SONUÇLARI -->
+    <!-- ===================================================== -->
+
+    <div class="degerlendirme-sonuc-grid">
+
+        <div class="panel-card degerlendirme-bolum">
+
+            <h3>Şube Memnuniyeti</h3>
+
+            {% if sube_istatistikleri %}
+
+            <div class="degerlendirme-mini-liste">
+
+                {% for item in sube_istatistikleri[:8] %}
+
+                <div class="degerlendirme-mini-satir">
+                    <div>
+                        <strong>{{ item.sube_ad }}</strong>
+                        <small>
+                            {{ item.degerlendirme_sayisi }} değerlendirme
+                        </small>
+                    </div>
+
+                    <span>
+                        ★ {{ item.ortalama_puan }}
+                    </span>
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <p class="degerlendirme-bos-kucuk">
+                Henüz şube değerlendirme verisi yok.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="panel-card degerlendirme-bolum">
+
+            <h3>Kurye Memnuniyeti</h3>
+
+            {% if kurye_istatistikleri %}
+
+            <div class="degerlendirme-mini-liste">
+
+                {% for item in kurye_istatistikleri[:8] %}
+
+                <div class="degerlendirme-mini-satir">
+                    <div>
+                        <strong>{{ item.kurye_ad }}</strong>
+                        <small>
+                            {{ item.degerlendirme_sayisi }} değerlendirme
+                        </small>
+                    </div>
+
+                    <span>
+                        ★ {{ item.ortalama_puan }}
+                    </span>
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <p class="degerlendirme-bos-kucuk">
+                Henüz kurye değerlendirme verisi yok.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+    .degerlendirme-page {
+        padding-top: 110px;
+        padding-bottom: 60px;
+    }
+
+    .degerlendirme-ozet-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin: 22px 0;
+    }
+
+    .degerlendirme-ozet-kutu {
+        padding: 18px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+    }
+
+    .degerlendirme-ozet-kutu span,
+    .degerlendirme-ozet-kutu small {
+        display: block;
+        color: #6b7280;
+        font-size: 13px;
+    }
+
+    .degerlendirme-ozet-kutu strong {
+        display: block;
+        margin-top: 7px;
+        color: #1f2937;
+        font-size: 22px;
+    }
+
+    .degerlendirme-ozet-kutu small {
+        margin-top: 4px;
+    }
+
+    .degerlendirme-bolum {
+        margin-bottom: 20px;
+    }
+
+    .degerlendirme-bolum h3 {
+        margin-top: 0;
+        color: #1f2937;
+        font-size: 18px;
+    }
+
+    .puan-dagilimi {
+        max-width: 650px;
+    }
+
+    .puan-satir {
+        display: grid;
+        grid-template-columns: 45px 1fr 45px;
+        align-items: center;
+        gap: 12px;
+        margin: 11px 0;
+    }
+
+    .puan-etiket,
+    .puan-adet {
+        color: #4b5563;
+        font-size: 13px;
+    }
+
+    .puan-adet {
+        text-align: right;
+    }
+
+    .puan-bar {
+        height: 8px;
+        overflow: hidden;
+        background: #e5e7eb;
+        border-radius: 10px;
+    }
+
+    .puan-bar-dolu {
+        height: 100%;
+        background: #f59e0b;
+        border-radius: 10px;
+    }
+
+    .degerlendirme-filtre {
+        display: grid;
+        grid-template-columns: 1fr 180px auto;
+        gap: 14px;
+        align-items: end;
+    }
+
+    .degerlendirme-filtre .form-group {
+        margin: 0;
+    }
+
+    .degerlendirme-filtre-butonlar {
+        display: flex;
+        gap: 8px;
+    }
+
+    .degerlendirme-temizle {
+        text-decoration: none;
+    }
+
+    .degerlendirme-baslik-satiri {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+    }
+
+    .degerlendirme-baslik-satiri h3 {
+        margin: 0;
+    }
+
+    .degerlendirme-baslik-satiri span {
+        color: #6b7280;
+        font-size: 13px;
+    }
+
+    .degerlendirme-kayit {
+        padding: 18px 0;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .degerlendirme-kayit:last-child {
+        border-bottom: 0;
+    }
+
+    .degerlendirme-kayit-ust {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    .degerlendirme-kayit-ust>div>strong {
+        color: #1f2937;
+    }
+
+    .degerlendirme-kayit-ust small {
+        color: #9ca3af;
+    }
+
+    .degerlendirme-yildizlar {
+        margin-top: 5px;
+    }
+
+    .degerlendirme-yildizlar b {
+        margin-left: 7px;
+        color: #4b5563;
+        font-size: 13px;
+    }
+
+    .aktif-yildiz {
+        color: #f59e0b;
+    }
+
+    .pasif-yildiz {
+        color: #d1d5db;
+    }
+
+    .degerlendirme-yorum {
+        margin: 13px 0;
+        padding: 12px;
+        background: #f9fafb;
+        border-radius: 6px;
+        color: #374151;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .yorum-yok {
+        color: #9ca3af;
+        font-style: italic;
+    }
+
+    .degerlendirme-detaylar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 25px;
+        color: #6b7280;
+        font-size: 13px;
+    }
+
+    .degerlendirme-detaylar a {
+        color: #2563eb;
+        text-decoration: none;
+    }
+
+    .degerlendirme-sonuc-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .degerlendirme-mini-satir {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 12px 0;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .degerlendirme-mini-satir:last-child {
+        border-bottom: 0;
+    }
+
+    .degerlendirme-mini-satir strong,
+    .degerlendirme-mini-satir small {
+        display: block;
+    }
+
+    .degerlendirme-mini-satir strong {
+        color: #374151;
+        font-size: 14px;
+    }
+
+    .degerlendirme-mini-satir small {
+        margin-top: 3px;
+        color: #9ca3af;
+    }
+
+    .degerlendirme-mini-satir>span {
+        white-space: nowrap;
+        color: #d97706;
+        font-weight: 600;
+    }
+
+    .degerlendirme-bos,
+    .degerlendirme-bos-kucuk {
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .degerlendirme-bos {
+        padding: 25px 0;
+        text-align: center;
+    }
+
+    @media (max-width: 900px) {
+
+        .degerlendirme-ozet-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .degerlendirme-filtre {
+            grid-template-columns: 1fr;
+        }
+
+        .degerlendirme-sonuc-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 550px) {
+
+        .degerlendirme-ozet-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .degerlendirme-kayit-ust {
+            flex-direction: column;
+        }
+    }
+</style>
+
+
+<script>
+
+    document
+        .querySelectorAll(".puan-bar-dolu")
+        .forEach(function (bar) {
+
+            let yuzde = parseFloat(
+                bar.dataset.yuzde || 0
+            );
+
+            if (yuzde < 0) {
+                yuzde = 0;
+            }
+
+            if (yuzde > 100) {
+                yuzde = 100;
+            }
+
+            bar.style.width =
+                yuzde + "%";
+
+        });
+
+</script>
+
+{% endblock %}

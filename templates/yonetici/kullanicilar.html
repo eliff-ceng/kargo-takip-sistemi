@@ -1,0 +1,269 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kullanıcılar - Yönetici Paneli
+{% endblock %}
+
+{% block content %}
+
+<div class="yonetici-dashboard">
+
+    <!-- =========================
+         BAŞLIK
+         ========================= -->
+
+    <div class="yonetici-header">
+
+        <div>
+
+            <h1>Kullanıcılar</h1>
+
+            <p>
+                Sistemde kayıtlı kullanıcıları
+                görüntüleyebilir ve filtreleyebilirsiniz.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FİLTRELEME
+         ========================= -->
+
+    <div class="yonetici-section">
+
+        <div class="yonetici-section-header">
+
+            <h2>Kullanıcı Ara ve Filtrele</h2>
+
+        </div>
+
+
+        <form method="GET" action="{{ url_for('main.yonetici_kullanicilar') }}">
+
+            <div class="row g-3">
+
+                <!-- Kullanıcı Adı -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Kullanıcı Adı
+                    </label>
+
+                    <input type="text" name="kullanici_adi" class="form-control" placeholder="Kullanıcı adı giriniz..."
+                        value="{{ kullanici_adi }}">
+
+                </div>
+
+
+                <!-- Ad Soyad -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Ad / Soyad
+                    </label>
+
+                    <input type="text" name="ad_soyad" class="form-control" placeholder="Ad veya soyad giriniz..."
+                        value="{{ ad_soyad }}">
+
+                </div>
+
+
+                <!-- E-posta -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        E-posta
+                    </label>
+
+                    <input type="text" name="email" class="form-control" placeholder="E-posta giriniz..."
+                        value="{{ email }}">
+
+                </div>
+
+
+                <!-- Rol -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Rol
+                    </label>
+
+                    <select name="rol_id" class="form-select">
+
+                        <option value="">
+                            Tüm Roller
+                        </option>
+
+                        {% for rol in roller %}
+
+                        <option value="{{ rol.id }}" {% if rol_id|string==rol.id|string %} selected {% endif %}>
+                            {{ rol.ad }}
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 BUTONLAR
+                 ========================= -->
+
+            <div class="d-flex gap-2 mt-4">
+
+                <button type="submit" class="btn btn-primary">
+
+                    🔎 Filtrele
+
+                </button>
+
+
+                <a href="{{ url_for('main.yonetici_kullanicilar') }}" class="btn btn-secondary">
+
+                    Temizle
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================
+         KULLANICI TABLOSU
+         ========================= -->
+
+    <div class="yonetici-section">
+
+        <div class="yonetici-section-header">
+
+            <h2>Kayıtlı Kullanıcılar</h2>
+
+            <span>
+                {{ kullanicilar|length }} kullanıcı bulundu.
+            </span>
+
+        </div>
+
+
+        <div class="yonetici-table-container">
+
+            <table class="yonetici-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Kullanıcı Adı</th>
+
+                        <th>Ad</th>
+
+                        <th>Soyad</th>
+
+                        <th>E-posta</th>
+
+                        <th>Rol</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for kullanici in kullanicilar %}
+
+                    <tr>
+
+                        <td>
+                            {{ kullanici.id }}
+                        </td>
+
+                        <td>
+                            {{ kullanici.kullanici_adi }}
+                        </td>
+
+                        <td>
+                            {{ kullanici.ad }}
+                        </td>
+
+                        <td>
+                            {{ kullanici.soyad }}
+                        </td>
+
+                        <td>
+                            {{ kullanici.email }}
+                        </td>
+
+                        <td>
+
+                            {% if kullanici.rol %}
+
+                            {{ kullanici.rol.ad }}
+
+                            {% else %}
+
+                            -
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="6" style="text-align: center;">
+
+                            Arama kriterlerine uygun
+                            kullanıcı bulunamadı.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         GERİ DÖN
+         ========================= -->
+
+    <div style="margin-top: 20px;">
+
+        <a href="{{ url_for('main.yonetici_panel') }}" class="yonetici-menu-button">
+
+            Yönetici Paneline Dön
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

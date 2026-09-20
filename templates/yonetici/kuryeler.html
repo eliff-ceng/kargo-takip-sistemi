@@ -1,0 +1,279 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kuryeler
+{% endblock %}
+
+{% block content %}
+
+<div class="yonetici-dashboard">
+
+    <!-- =========================
+         BAŞLIK
+         ========================= -->
+
+    <div class="yonetici-header">
+
+        <div>
+
+            <h1>Kuryeler</h1>
+
+            <p>
+                Sistemde kayıtlı tüm kuryeleri görüntüleyebilir
+                ve filtreleyebilirsiniz.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FİLTRELEME
+         ========================= -->
+
+    <div class="yonetici-section">
+
+        <div class="yonetici-section-header">
+
+            <h2>Kurye Filtreleme</h2>
+
+        </div>
+
+
+        <form method="GET" action="{{ url_for('main.yonetici_kuryeler') }}">
+
+            <div class="yonetici-filter-group">
+
+                <label for="ad">
+                    Ad
+                </label>
+
+                <input type="text" id="ad" name="ad" placeholder="Ad giriniz" value="{{ ad }}">
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label for="soyad">
+                    Soyad
+                </label>
+
+                <input type="text" id="soyad" name="soyad" placeholder="Soyad giriniz" value="{{ soyad }}">
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label for="sube_id">
+                    Şube
+                </label>
+
+                <select id="sube_id" name="sube_id">
+
+                    <option value="">
+                        Tüm Şubeler
+                    </option>
+
+                    {% for sube in subeler %}
+
+                    <option value="{{ sube.id }}" {% if sube_id|string==sube.id|string %} selected {% endif %}>
+
+                        {{ sube.sube_ad }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label for="telefon">
+                    Telefon
+                </label>
+
+                <input type="text" id="telefon" name="telefon" placeholder="Telefon giriniz" value="{{ telefon }}">
+
+            </div>
+
+
+            <div style="margin-top: 20px;">
+
+                <button type="submit" class="yonetici-menu-button">
+                    Filtrele
+                </button>
+
+
+                <a href="{{ url_for('main.yonetici_kuryeler') }}" class="yonetici-menu-button">
+                    Filtreleri Temizle
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================
+         KURYE TABLOSU
+         ========================= -->
+
+    <div class="yonetici-section">
+
+        <div class="yonetici-section-header">
+
+            <h2>Kuryeler</h2>
+
+
+            <!-- YENİ KURYE EKLE -->
+
+            <a href="{{ url_for('main.yonetici_kurye_ekle') }}" class="yonetici-menu-button">
+                + Yeni Kurye Ekle
+            </a>
+
+        </div>
+
+
+        <div class="yonetici-table-container">
+
+            <table class="yonetici-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Ad</th>
+
+                        <th>Soyad</th>
+
+                        <th>Kullanıcı Adı</th>
+
+                        <th>Email</th>
+
+                        <th>Telefon</th>
+
+                        <th>Şube</th>
+
+                        <th>İşlemler</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for kurye in kuryeler %}
+
+                    <tr>
+
+                        <td>
+                            {{ kurye.id }}
+                        </td>
+
+                        <td>
+                            {{ kurye.kullanici.ad }}
+                        </td>
+
+                        <td>
+                            {{ kurye.kullanici.soyad }}
+                        </td>
+
+                        <td>
+                            {{ kurye.kullanici.kullanici_adi }}
+                        </td>
+
+                        <td>
+                            {{ kurye.kullanici.email }}
+                        </td>
+
+                        <td>
+                            {{ kurye.telefon }}
+                        </td>
+
+                        <td>
+                            {{ kurye.sube.sube_ad }}
+                        </td>
+
+
+                        <!-- İŞLEMLER -->
+
+                        <td>
+
+                            <!-- DÜZENLE -->
+
+                            <a href="{{ url_for(
+                                    'main.yonetici_kurye_duzenle',
+                                    kurye_id=kurye.id
+                                ) }}" class="yonetici-menu-button">
+                                Düzenle
+                            </a>
+
+
+                            <!-- SİL -->
+
+                            <form method="POST" action="{{ url_for(
+                                    'main.yonetici_kurye_sil',
+                                    kurye_id=kurye.id
+                                ) }}" style="display: inline;" onsubmit="return confirm(
+                                    'Bu kuryeyi silmek istediğinizden emin misiniz?'
+                                );">
+
+                                <button type="submit" class="yonetici-menu-button">
+                                    Sil
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="8">
+
+                            Filtrelere uygun kurye bulunamadı.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         GERİ DÖN
+         ========================= -->
+
+    <div style="margin-top: 20px;">
+
+        <a href="{{ url_for('main.yonetici_panel') }}" class="yonetici-menu-button">
+            Yönetici Paneline Dön
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

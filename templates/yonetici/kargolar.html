@@ -1,0 +1,309 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kargolar
+{% endblock %}
+
+{% block content %}
+
+<div class="yonetici-dashboard">
+
+    <!-- =========================
+         BAŞLIK
+         ========================= -->
+
+    <div class="yonetici-header">
+
+        <div>
+
+            <h1>Kargolar</h1>
+
+            <p>
+                Sistemde kayıtlı tüm kargoları görüntüleyebilir
+                ve filtreleyebilirsiniz.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FİLTRELEME
+         ========================= -->
+
+    <div class="yonetici-section">
+
+        <div class="yonetici-section-header">
+
+            <h2>Kargo Filtreleme</h2>
+
+        </div>
+
+
+        <form method="GET" action="{{ url_for('main.yonetici_kargolar') }}">
+
+            <div class="yonetici-filter-group">
+
+                <label for="takip_no">
+                    Takip Numarası
+                </label>
+
+                <input type="text" id="takip_no" name="takip_no" placeholder="Takip numarası giriniz"
+                    value="{{ takip_no }}">
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label for="gonderici">
+                    Gönderici
+                </label>
+
+                <input type="text" id="gonderici" name="gonderici" placeholder="Gönderici adı giriniz"
+                    value="{{ gonderici }}">
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label for="alici">
+                    Alıcı
+                </label>
+
+                <input type="text" id="alici" name="alici" placeholder="Alıcı adı giriniz" value="{{ alici }}">
+
+            </div>
+
+
+            <div class="yonetici-filter-group">
+
+                <label for="durum">
+                    Durum
+                </label>
+
+                <select id="durum" name="durum">
+
+                    <option value="">
+                        Tüm Durumlar
+                    </option>
+
+                    <option value="Hazırlanıyor" {% if durum=="Hazırlanıyor" %}selected{% endif %}>
+                        Hazırlanıyor
+                    </option>
+
+                    <option value="Şubede" {% if durum=="Şubede" %}selected{% endif %}>
+                        Şubede
+                    </option>
+
+                    <option value="Kuryede" {% if durum=="Kuryede" %}selected{% endif %}>
+                        Kuryede
+                    </option>
+
+                    <option value="Dağıtımda" {% if durum=="Dağıtımda" %}selected{% endif %}>
+                        Dağıtımda
+                    </option>
+
+                    <option value="Teslim Edildi" {% if durum=="Teslim Edildi" %}selected{% endif %}>
+                        Teslim Edildi
+                    </option>
+
+                    <option value="İptal Edildi" {% if durum=="İptal Edildi" %}selected{% endif %}>
+                        İptal Edildi
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div style="margin-top: 20px;">
+
+                <button type="submit" class="yonetici-menu-button">
+
+                    Filtrele
+
+                </button>
+
+
+                <a href="{{ url_for('main.yonetici_kargolar') }}" class="yonetici-menu-button">
+
+                    Filtreleri Temizle
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================
+         KARGO TABLOSU
+         ========================= -->
+
+    <div class="yonetici-section">
+
+        <div class="yonetici-section-header">
+
+            <h2>Kargolar</h2>
+
+
+            <!-- YENİ KARGO EKLE -->
+
+            <a href="{{ url_for('main.yonetici_kargo_ekle') }}" class="yonetici-menu-button">
+
+                + Yeni Kargo Ekle
+
+            </a>
+
+        </div>
+
+
+        <div class="yonetici-table-container">
+
+            <table class="yonetici-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Takip No</th>
+
+                        <th>Gönderici</th>
+
+                        <th>Alıcı</th>
+
+                        <th>Durum</th>
+
+                        <th>Gönderim Tarihi</th>
+
+                        <th>İşlemler</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for kargo in kargolar %}
+
+                    <tr>
+
+                        <td>
+                            {{ kargo.id }}
+                        </td>
+
+                        <td>
+                            {{ kargo.takip_no }}
+                        </td>
+
+                        <td>
+                            {{ kargo.gonderici }}
+                        </td>
+
+                        <td>
+                            {{ kargo.alici }}
+                        </td>
+
+                        <td>
+                            {{ kargo.durum }}
+                        </td>
+
+                        <td>
+
+                            {% if kargo.gonderim_tarihi %}
+
+                            {{ kargo.gonderim_tarihi.strftime('%d.%m.%Y %H:%M') }}
+
+                            {% else %}
+
+                            -
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- =========================
+                             İŞLEMLER
+                             ========================= -->
+
+                        <td>
+
+                            <a href="{{ url_for(
+                                'main.yonetici_kargo_duzenle',
+                                kargo_id=kargo.id
+                            ) }}" class="yonetici-menu-button">
+
+                                Düzenle
+
+                            </a>
+
+
+                            <form method="POST" action="{{ url_for(
+                                      'main.yonetici_kargo_sil',
+                                      kargo_id=kargo.id
+                                  ) }}" style="display:inline;" onsubmit="return confirm(
+                                      'Bu kargoyu silmek istediğinizden emin misiniz?'
+                                  );">
+
+                                <button type="submit" class="yonetici-menu-button">
+
+                                    Sil
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="7">
+
+                            Filtrelere uygun kargo bulunamadı.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         GERİ DÖN
+         ========================= -->
+
+    <div style="margin-top: 20px;">
+
+        <a href="{{ url_for('main.yonetici_panel') }}" class="yonetici-menu-button">
+
+            Yönetici Paneline Dön
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

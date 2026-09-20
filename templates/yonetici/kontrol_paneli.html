@@ -1,0 +1,276 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Yönetici Paneli
+{% endblock %}
+
+
+{% block content %}
+
+<div class="yonetici-page">
+
+
+    <!-- =========================
+         BAŞLIK
+         ========================= -->
+
+    <div class="yonetici-header">
+
+        <div>
+
+            <h1>Yönetici Paneli</h1>
+
+            <p>
+                Hoş geldiniz,
+                <strong>
+                    {{ session.get("kullanici_adi") }}
+                </strong>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         İSTATİSTİKLER
+         ========================= -->
+
+    <div class="yonetici-istatistikler">
+
+
+        <!-- KULLANICI -->
+
+        <div class="yonetici-istatistik-card">
+
+            <div class="yonetici-istatistik-icon">
+
+                <iconify-icon icon="mdi:account-group">
+                </iconify-icon>
+
+            </div>
+
+            <div class="yonetici-istatistik-bilgi">
+
+                <span>Toplam Kullanıcı</span>
+
+                <strong>
+                    {{ kullanici_sayisi }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ŞUBE -->
+
+        <div class="yonetici-istatistik-card">
+
+            <div class="yonetici-istatistik-icon">
+
+                <iconify-icon icon="griddy-icons:building-filled">
+                </iconify-icon>
+
+            </div>
+
+            <div class="yonetici-istatistik-bilgi">
+
+                <span>Toplam Şube</span>
+
+                <strong>
+                    {{ sube_sayisi }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- KURYE -->
+
+        <div class="yonetici-istatistik-card">
+
+            <div class="yonetici-istatistik-icon">
+
+                <iconify-icon icon="fa6-solid:truck">
+                </iconify-icon>
+
+            </div>
+
+            <div class="yonetici-istatistik-bilgi">
+
+                <span>Toplam Kurye</span>
+
+                <strong>
+                    {{ kurye_sayisi }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- KARGO -->
+
+        <div class="yonetici-istatistik-card">
+
+            <div class="yonetici-istatistik-icon">
+
+                <iconify-icon icon="mdi:package-variant-closed">
+                </iconify-icon>
+
+            </div>
+
+            <div class="yonetici-istatistik-bilgi">
+
+                <span>Toplam Kargo</span>
+
+                <strong>
+                    {{ kargo_sayisi }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         YÖNETİM ALANLARI
+         ========================= -->
+
+    <div class="yonetici-yonetim">
+
+
+        <!-- KULLANICILAR -->
+
+        <div class="yonetici-yonetim-card">
+
+            <div class="yonetici-yonetim-icon">
+
+                <iconify-icon icon="mdi:account-group">
+                </iconify-icon>
+
+            </div>
+
+            <div class="yonetici-yonetim-bilgi">
+
+                <h3>Kullanıcılar</h3>
+
+                <p>
+                    Sistemde kayıtlı tüm kullanıcıları
+                    görüntüle.
+                </p>
+
+            </div>
+
+            <a href="{{ url_for('main.yonetici_kullanicilar') }}" class="yonetici-yonetim-btn">
+
+                Görüntüle
+
+            </a>
+
+        </div>
+
+
+        <!-- ŞUBELER -->
+
+        <div class="yonetici-yonetim-card">
+
+            <div class="yonetici-yonetim-icon">
+
+                <iconify-icon icon="griddy-icons:building-filled">
+                </iconify-icon>
+
+            </div>
+
+            <div class="yonetici-yonetim-bilgi">
+
+                <h3>Şubeler</h3>
+
+                <p>
+                    Sistemde bulunan şubeleri
+                    görüntüle ve yönet.
+                </p>
+
+            </div>
+
+            <a href="{{ url_for('main.yonetici_subeler') }}" class="yonetici-yonetim-btn">
+
+                Görüntüle
+
+            </a>
+
+        </div>
+
+
+        <!-- KURYELER -->
+
+        <div class="yonetici-yonetim-card">
+
+            <div class="yonetici-yonetim-icon">
+
+                <iconify-icon icon="fa6-solid:truck">
+                </iconify-icon>
+
+            </div>
+
+            <div class="yonetici-yonetim-bilgi">
+
+                <h3>Kuryeler</h3>
+
+                <p>
+                    Sistemde kayıtlı kuryeleri
+                    görüntüle ve yönet.
+                </p>
+
+            </div>
+
+            <a href="{{ url_for('main.yonetici_kuryeler') }}" class="yonetici-yonetim-btn">
+
+                Görüntüle
+
+            </a>
+
+        </div>
+
+
+        <!-- KARGOLAR -->
+
+        <div class="yonetici-yonetim-card">
+
+            <div class="yonetici-yonetim-icon">
+
+                <iconify-icon icon="mdi:package-variant-closed">
+                </iconify-icon>
+
+            </div>
+
+            <div class="yonetici-yonetim-bilgi">
+
+                <h3>Kargolar</h3>
+
+                <p>
+                    Sistemdeki tüm kargoları ve
+                    durumlarını görüntüle.
+                </p>
+
+            </div>
+
+            <a href="{{ url_for('main.yonetici_kargolar') }}" class="yonetici-yonetim-btn">
+
+                Görüntüle
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Bildirimler - Kargo Takip Sistemi
+{% endblock %}
+
+{% block content %}
+
+<div class="bildirimler-page">
+
+    <div class="bildirimler-card">
+
+        <div class="bildirimler-header">
+
+            <div class="bildirim-baslik-alani">
+
+                <h1>Bildirimler</h1>
+
+                <p>
+                    Kargo hareketleri ve sistem bildirimleri
+                </p>
+
+            </div>
+
+            <div class="bildirim-sayi">
+                {{ okunmamis_sayi }} okunmamış
+            </div>
+
+        </div>
+
+
+        <div class="bildirimler-listesi">
+
+            {% if bildirimler %}
+
+            {% for bildirim in bildirimler %}
+
+            <div class="bildirim-item {% if not bildirim.okundu %}okunmamis{% endif %}">
+
+                <div class="bildirim-icon">
+                    <iconify-icon icon="mdi:bell-outline"></iconify-icon>
+                </div>
+
+
+                <div class="bildirim-icerik">
+
+                    <div class="bildirim-ust">
+
+                        <h3>
+                            {{ bildirim.baslik }}
+                        </h3>
+
+                        {% if not bildirim.okundu %}
+
+                        <span class="yeni-bildirim">
+                            Yeni
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <p>
+                        {{ bildirim.mesaj }}
+                    </p>
+
+
+                    <div class="bildirim-alt">
+
+                        <small>
+                            <iconify-icon icon="mdi:clock-outline"></iconify-icon>
+
+                            {{ bildirim.tarih.strftime("%d.%m.%Y %H:%M") }}
+                        </small>
+
+
+                        {% if not bildirim.okundu %}
+
+                        <form method="POST" action="{{ url_for('main.bildirim_okundu', bildirim_id=bildirim.id) }}">
+
+                            <button type="submit">
+                                Okundu olarak işaretle
+                            </button>
+
+                        </form>
+
+                        {% else %}
+
+                        <span class="bildirim-okundu">
+
+                            <iconify-icon icon="mdi:check-circle-outline"></iconify-icon>
+
+                            Okundu
+
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+            {% else %}
+
+            <div class="bildirim-yok">
+
+                <iconify-icon icon="mdi:bell-off-outline"></iconify-icon>
+
+                <h3>
+                    Bildirim bulunmuyor
+                </h3>
+
+                <p>
+                    Henüz size gönderilmiş bir bildirim bulunmamaktadır.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
